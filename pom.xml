@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.github.marcus99661</groupId>
-	<artifactId>No</artifactId>
+	<artifactId>Ostukorv</artifactId>
 	<version>1.0</version>
-	<name>No</name>
-	<description>NoSQLi CTF Challenge</description>
+	<name>Ostukorv</name>
+	<description>ASI Karikas Ostukorv ülesanne</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -45,7 +45,6 @@
 			<version>2.4.0</version>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>

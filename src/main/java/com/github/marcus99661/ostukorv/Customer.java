@@ -1,4 +1,4 @@
-package com.github.marcus99661.ctf;
+package com.github.marcus99661.ostukorv;
 
 
 import org.springframework.data.annotation.Id;

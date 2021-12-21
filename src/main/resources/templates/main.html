@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Ostukorv</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" th:href="@{/img/favicon.jpg}"/>
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/shopper.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/wb17_shopper.css}" />
+</head>
+<body>
+<div id="wrapper" class="home-page">
+    <!-- start header -->
+    <header>
+        <div id="wb_navigationLayoutGrid">
+            <div id="navigationLayoutGrid">
+                <div class="row">
+                    <div class="col-1">
+                        <div id="wb_navigationHeading" style="display:inline-block;width:100%;z-index:0;">
+                            <h1 id="navigationHeading">E-POOD</h1>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="col-2-padding">
+                            <form name="SiteSearch1_form" id="SiteSearch1_form" role="search" accept-charset="UTF-8" style="display:inline" onsubmit="return searchPage(features)">
+                                <input type="text" id="SiteSearch1" style="display:block;width: 100%;height:26px;z-index:1;" name="SiteSearch1" value="" spellcheck="false" placeholder="Otsi" role="searchbox"></form>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div id="wb_navigationMenu" style="display:inline-block;width:100%;z-index:2;vertical-align:top;">
+                            <ul id="navigationMenu">
+                                <li><a href="">Konto</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div id="wb_PayPalShoppingCart1" style="display:inline-block;width:32px;height:32px;text-align:center;z-index:3;">
+                            <svg id="PayPalShoppingCart1" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M709 794 C726 777, 746 768, 769 768 C791 768, 811 777, 828 794 C844 811, 852 831, 853 854 C852 877, 844 896, 828 913 C811 930, 791 938, 769 938 C746 938, 726 930, 709 913 C691 896, 683 877, 683 854 C683 831, 691 811, 709 794 Z M85 86 L225 86 L265 170 L897 170 C909 170, 919 174, 927 183 C935 193, 939 202, 939 214 C939 215, 937 222, 933 234 L781 510 C765 539, 740 554, 707 554 L389 554 L351 624 L349 630 C349 637, 352 640, 359 640 L853 640 L853 726 L341 726 C318 726, 298 717, 282 700 C265 683, 257 663, 257 640 C257 627, 260 613, 267 600 L325 494 L171 170 L85 170Z  M282 794 C298 777, 318 768, 341 768 C362 768, 383 777, 401 794 C418 811, 427 831, 427 854 C427 877, 418 896, 401 913 C383 930, 362 938, 341 938 C318 938, 298 930, 282 913 C265 896, 257 877, 257 854 C257 831, 265 811, 282 794"/>
+                            </svg>
+
+                            <span id="PayPalShoppingCart1-badge">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="wb_LayoutGrid2">
+            <div id="LayoutGrid2">
+                <div class="row">
+                    <div class="col-1">
+                        <input type="submit" id="Button1" name="" value="Submit" style="display:inline-block;width:96px;height:25px;z-index:4;">
+                    </div>
+                    <div class="col-2">
+                        <input type="submit" id="Button2" name="" value="Submit" style="display:inline-block;width:96px;height:25px;z-index:5;">
+                    </div>
+                    <div class="col-3">
+                        <input type="submit" id="Button3" name="" value="Submit" style="display:inline-block;width:96px;height:25px;z-index:6;">
+                    </div>
+                    <div class="col-4">
+                        <input type="submit" id="Button4" name="" value="Submit" style="display:inline-block;width:96px;height:25px;z-index:7;">
+                    </div>
+                    <div class="col-5">
+                        <input type="submit" id="Button5" name="" value="Submit" style="display:inline-block;width:96px;height:25px;z-index:8;">
+                    </div>
+                    <div class="col-6">
+                        <input type="submit" id="Button6" name="" value="Submit" style="display:inline-block;width:96px;height:25px;z-index:9;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- end header -->
+    <div th:insert="fragments/__${page}__ :: div"> </div>
+    <footer>
+        <div id="wb_serviceLayoutGrid">
+            <div id="serviceLayoutGrid">
+                <div class="row">
+                    <div class="col-1">
+                        <div id="wb_serviceCard1" style="display:inline-block;width:212px;height:59px;z-index:30;" class="card">
+                            <div id="serviceCard1-card-body">
+                                <div id="serviceCard1-card-item0"><i class="fa fa-truck"></i></div>
+                                <div id="serviceCard1-card-item1">Free shipping</div>
+                                <div id="serviceCard1-card-item2">Lorem ipsum dolor</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div id="wb_serviceCard2" style="display:inline-block;width:203px;height:59px;z-index:31;" class="card">
+                            <div id="serviceCard2-card-body">
+                                <div id="serviceCard2-card-item0"><i class="fa fa-phone"></i></div>
+                                <div id="serviceCard2-card-item1">Contact us 24/7</div>
+                                <div id="serviceCard2-card-item2">Lorem ipsum dolor</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div id="wb_serviceCard3" style="display:inline-block;width:209px;height:59px;z-index:32;" class="card">
+                            <div id="serviceCard3-card-body">
+                                <div id="serviceCard3-card-item0"><i class="fa fa-sign-out"></i></div>
+                                <div id="serviceCard3-card-item1">30 Days Return</div>
+                                <div id="serviceCard3-card-item2">Lorem ipsum dolor</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div id="wb_serviceCard4" style="display:inline-block;width:209px;height:59px;z-index:33;" class="card">
+                            <div id="serviceCard4-card-body">
+                                <div id="serviceCard4-card-item0"><i class="fa fa-lock"></i></div>
+                                <div id="serviceCard4-card-item1">Secure Payments</div>
+                                <div id="serviceCard4-card-item2">Lorem ipsum dolor</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="wb_links">
+            <div id="links-overlay"></div>
+            <div id="links">
+                <div class="row">
+                    <div class="col-1">
+                        <div id="wb_linksText1">
+                            <span style="color:#FFFFFF;"><strong>SHOPPER</strong></span>
+                        </div>
+                        <div id="wb_contactAddress">
+                            <p>#28, 3nd floor, WYSIWYG Plaza<br/>Web City, Builder, WB 1969</p>
+                            <p>Phone: 100 121 34567</p>
+                            <p>Fax: 100 121 34568</p>
+                            <p>Email: info@wysiwygmail.com</p>
+                        </div>
+                        <div id="wb_contactIcon1" style="display:inline-block;width:27px;height:27px;text-align:center;z-index:46;">
+                            <a href="./wb17_shopper.html"><div id="contactIcon1"><i class="fa fa-linkedin-square"></i></div></a>
+                        </div>
+                        <div id="wb_contactIcon2" style="display:inline-block;width:27px;height:27px;text-align:center;z-index:47;">
+                            <a href="./wb17_shopper.html"><div id="contactIcon2"><i class="fa fa-facebook-official"></i></div></a>
+                        </div>
+                        <div id="wb_contactIcon3" style="display:inline-block;width:27px;height:27px;text-align:center;z-index:48;">
+                            <a href="./wb17_shopper.html"><div id="contactIcon3"><i class="fa fa-twitter"></i></div></a>
+                        </div>
+                        <div id="wb_contactIcon4" style="display:inline-block;width:27px;height:27px;text-align:center;z-index:49;">
+                            <a href="./wb17_shopper.html"><div id="contactIcon4"><i class="fa fa-youtube-play"></i></div></a>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div id="wb_linksText2">
+                            <span style="color:#FFFFFF;"><strong>COMPANY</strong></span>
+                        </div>
+                        <div id="wb_linksMenu2" style="display:inline-block;width:100%;z-index:51;">
+                            <ul id="linksMenu2" role="menubar" class="nav">
+                                <li role="menuitem" class="nav-item firstmain"><a class="nav-link" href="" target="_self">What&nbsp;We&nbsp;Do</a>
+                                </li>
+                                <li role="menuitem" class="nav-item"><a class="nav-link" href="" target="_self">Services</a>
+                                </li>
+                                <li role="menuitem" class="nav-item"><a class="nav-link" href="https://www.wysiwygwebbuilder.com/forum/index.php" target="_self">Forum</a>
+                                </li>
+                                <li role="menuitem" class="nav-item"><a class="nav-link" href="#" target="_self">Support</a>
+                                </li>
+                                <li role="menuitem" class="nav-item"><a class="nav-link" href="#" target="_self">Privacy&nbsp;Policy</a>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div id="wb_linksText3">
+                            <span style="color:#FFFFFF;"><strong>SUPPORT</strong></span>
+                        </div>
+                        <div id="wb_linksMenu1" style="display:inline-block;width:100%;z-index:53;">
+                            <ul id="linksMenu1" role="menubar" class="nav">
+                                <li role="menuitem" class="nav-item firstmain"><a class="nav-link" href="" target="_self">Help&nbsp;&amp;&nbsp;Contact&nbsp;Us</a>
+                                </li>
+                                <li role="menuitem" class="nav-item"><a class="nav-link" href="" target="_self">Returns&nbsp;&amp;&nbsp;Refunds</a>
+                                </li>
+                                <li role="menuitem" class="nav-item"><a class="nav-link" href="" target="_self">Online&nbsp;Stores</a>
+                                </li>
+                                <li role="menuitem" class="nav-item"><a class="nav-link" href="" target="_self">Terms&nbsp;&amp;&nbsp;Conditions</a>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div id="wb_linksText4">
+                            <span style="color:#FFFFFF;"><strong>STAY UP TO DATE</strong></span>
+                        </div>
+                        <div id="wb_linksText5">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. </p>
+                        </div>
+                        <input type="text" id="contactEmail" style="display:block;width: 100%;height:38px;z-index:56;" name="email" value="" spellcheck="false" placeholder="Email">
+                        <input type="submit" id="contactButton" name="" value="Sign Up" style="display:inline-block;width:97px;height:34px;z-index:57;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+<a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
+<script type="text/javascript" th:src="@{/js/jquery-1.12.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/util.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/carousel.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/modal.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/searchindex.js}"></script>
+<script type="text/javascript" th:src="@{/js/wb.sitesearch.min.js}"></script>
+<script type="text/javascript" th:src="@{js/minicart.min.js}"></script>
+</body>
+</html>

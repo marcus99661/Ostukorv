@@ -15,9 +15,6 @@ RUN apt-get install -y curl
 COPY --from=build /usr/src/app/target/*.jar /usr/app/ctf.jar 
 EXPOSE 8080
 
-RUN mkdir /var/backup
-RUN echo "flag{1644dad6-6109-11ec-90d6-0242ac120003}" > /var/backup/secret.txt
-
 # if you want to start the app using an application.properties file located
 #ENTRYPOINT ["java","-jar","/app.jar", "--spring.config.location=file:/application.properties"]
 

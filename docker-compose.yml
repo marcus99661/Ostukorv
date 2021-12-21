@@ -10,10 +10,10 @@ services:
       - 27017:27017
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=admin
+      - MONGO_INITDB_ROOT_PASSWORD=adminadminadmin111
       - MONGO_INITDB_DATABASE=data
       - MONGO_DB_USERNAME=user
-      - MONGO_DB_PASSWORD=user
+      - MONGO_DB_PASSWORD=useruseruser111
     networks:
       main-network:
     
@@ -21,7 +21,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: no-ctf
+    container_name: ostukorv
     restart: on-failure
     depends_on:
       - mongo
@@ -34,7 +34,7 @@ services:
       - SPRING_DATA_MONGODB_HOST=mongo
       - SPRING_DATA_MONGODB_PORT=27017
       - SPRING_DATA_MONGODB_USERNAME=admin
-      - SPRING_DATA_MONGODB_PASSWORD=admin
+      - SPRING_DATA_MONGODB_PASSWORD=adminadminadmin111
       - SPRING_DATA_MONGODB_DATABASE=db
     networks:
       main-network:
