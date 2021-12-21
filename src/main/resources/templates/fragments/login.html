@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Notes login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/login.css}" rel="stylesheet" />
+</head>
+<body>
+<div class="login-page">
+    <div class="form">
+        <p class="message">LOGIN</p>
+        <form class="post" method="post" action = '/admin/sendLogin'>
+            <input type="text" placeholder="Username" name="username"/>
+            <input type="password" placeholder="Password" name="password"/>
+            <button type="submit">login</button>
+        </form>
+        <a href="/register">
+            <button>Register</button>
+        </a>
+        <div class="alert alert-danger" th:if="'wrong' == ${error}">Username or password is incorrect</div>
+        <div class="alert alert-danger" th:if="'username' == ${error}">Username can't be empty</div>
+        <div class="alert alert-danger" th:if="'password' == ${error}">Password can't be empty</div>
+    </div>
+</div>
+</body>
+</html>

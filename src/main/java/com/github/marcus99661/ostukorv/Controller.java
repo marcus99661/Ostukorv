@@ -25,6 +25,12 @@ public class Controller {
         this.repository = repository;
     }
 
+    /**
+     * Soodustused võtab andmebaasist
+     *
+     * Esilehe tooted (hind, allahindlus, pilti file) võtab andmebaasist
+     */
+
     // Main leht
     @GetMapping(value = "/")
     public String index(@RequestParam(required = false) String error, Model model) {

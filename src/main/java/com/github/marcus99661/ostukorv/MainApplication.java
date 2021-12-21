@@ -15,6 +15,9 @@ public class MainApplication implements CommandLineRunner {
 	@Autowired
 	public CustomerRepository repository;
 
+	@Autowired
+	public AdminRepository adminRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(MainApplication.class, args);
 	}
@@ -24,7 +27,9 @@ public class MainApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 		repository.deleteAll();
+		adminRepository.deleteAll();
 
+		adminRepository.save(new Admin("admin", "admin"));
 		repository.save(new Customer("Bob", "5e60308cf1af9df9c5ab9201ba7179cc"));
 		repository.save(new Customer("Martin", "1a0eb52ed41f35e243a8da8e3759e96e"));
 	}

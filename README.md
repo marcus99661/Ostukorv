@@ -10,8 +10,13 @@ Hindade valuutat saab vahetada?
 
 ### Header
 
- - Toodete 
+ - E-poe nimi
  - Keele vahetus funktsioon (Hetkel inglise ja eesti, jätab cookina meelde)
+ - Otsingu lahter
+ - Konto link
+ - Ostukorvi ikoon
+
+ - Toodete kategooriad, max 8 ()
 
 ### Footer
 
