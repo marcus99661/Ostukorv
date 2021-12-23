@@ -158,7 +158,6 @@ input:focus, textarea:focus, select:focus
    background-image: none;
    border: 0px solid #CCCCCC;
    box-sizing: border-box;
-   margin: 0;
 }
 #LayoutGrid2
 {

@@ -6,17 +6,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-
 @SpringBootApplication
 public class MainApplication implements CommandLineRunner {
 
 	@Autowired
-	public CustomerRepository repository;
+	public KasutajaRepository repository;
 
 	@Autowired
 	public AdminRepository adminRepository;
+
+	@Autowired
+	public ToodeRepository toodeRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MainApplication.class, args);
@@ -28,9 +28,14 @@ public class MainApplication implements CommandLineRunner {
 
 		repository.deleteAll();
 		adminRepository.deleteAll();
+		toodeRepository.deleteAll();
 
 		adminRepository.save(new Admin("admin", "admin"));
-		repository.save(new Customer("Bob", "5e60308cf1af9df9c5ab9201ba7179cc"));
-		repository.save(new Customer("Martin", "1a0eb52ed41f35e243a8da8e3759e96e"));
+		repository.save(new Kasutaja("Bob", "bob@gmail.com", "Bobpassword"));
+		repository.save(new Kasutaja("Martin", "martin@gmail.com", "Martinpassword"));
+		toodeRepository.save(new Toode("Auto", "auto.png", "Hea auto", "10000", "1"));
+		toodeRepository.save(new Toode("Tool", "tool.png", "Väga hea Razeri tool", "100", "5"));
+		toodeRepository.save(new Toode("Monitor", "monitor.png", "Ülimalt hea Samsung 32 tolli, kumber, 144Hz ja väga hea video kvaliteet. Ülimalt hea Samsung 32 tolli, kumber, 144Hz ja väga hea video kvaliteet. Ülimalt hea Samsung 32 tolli, kumber, 144Hz ja väga hea video kvaliteet. Ülimalt hea Samsung 32 tolli, kumber, 144Hz ja väga hea video kvaliteet. Ülimalt hea Samsung 32 tolli, kumber, 144Hz ja väga hea video kvaliteet", "200", "10"));
+		toodeRepository.save(new Toode("Tass", "tass.png", "Lamba pildiga tass", "5", "500"));
 	}
 }

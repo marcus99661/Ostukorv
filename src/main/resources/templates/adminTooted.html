@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Toodete nimekiri</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}" />
+</head>
+<body>
+<!DOCTYPE html>
+    <div class="toote-nimekiri">
+        <table width="80%">
+            <thead>
+            <tr>
+                <th width="20%"> Nimi </th>
+                <th width="50%"> Seletus </th>
+                <th width="10%"> Hind </th>
+                <th width="5%"> Kogus </th>
+                <th width="5%"> Muuda </th>
+                <th width="5%"> Eemalda </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="toode : ${tooted}">
+                <div class="toode">
+                    <td><span style="width: 20%;" th:text="${toode.name}"> Nimi </span></td>
+                    <td><span th:text="${toode.desc}"> Seletus </span></td>
+                    <td><span th:text="${toode.price}"> Hind </span></td>
+                    <td><span th:text="${toode.amount}"> Kogus </span></td>
+                    <td><button type="button"> Muuda </button></td>
+                    <td><button type="button"> Eemalda </button></td>
+                </div>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -10,7 +10,7 @@ Hindade valuutat saab vahetada?
 
 ### Header
 
- - E-poe nimi
+ - ~~E-poe nimi~~
  - Keele vahetus funktsioon (Hetkel inglise ja eesti, jätab cookina meelde)
  - Otsingu lahter
  - Konto link
@@ -48,11 +48,14 @@ Asub - "/admin"
  - Kui kasutaja ja password on õige, siis saad JWT
  - Võib lisada brute-force vastase asja
 
-### Toodete lisamine
+### Tooted
+ - Nupp millega saab lisada tooteid
 
- - Saab valida hinna
- - Saab valida hulga
- - Piirata palju saab üks konto/IP osta
+ - Pikk nimekiri kus on kõik tooted (võetud toodete andmebaasist)
+ - igal real on eraldi toode
+ - iga toote juures on pilt, nimi, hind(euro), kogus, muutmise nupp, kustutamise nupp
+   - iga toote juures on alaosa, kus on staatus (ostetud, )
+   - alaosa kus on saab toote juurde lisada ajastatud allahindlus
 
 ## Otsingu funktsioon
 

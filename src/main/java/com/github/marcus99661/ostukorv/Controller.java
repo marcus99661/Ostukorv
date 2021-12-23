@@ -15,12 +15,12 @@ import java.util.Objects;
 @org.springframework.stereotype.Controller
 public class Controller {
     @Autowired
-    public CustomerRepository repository;
+    public KasutajaRepository repository;
 
     @Autowired
     private MongoTemplate mt;
 
-    public Controller(MongoTemplate mt, CustomerRepository repository) {
+    public Controller(MongoTemplate mt, KasutajaRepository repository) {
         this.mt = mt;
         this.repository = repository;
     }
@@ -48,6 +48,7 @@ public class Controller {
      *
      */
     @GetMapping(value = "/login")
+    @ResponseBody
     public String login(@RequestParam(required = false) String error, Model model) {
         if (!Objects.isNull(error)) {
             model.addAttribute("error", error);
@@ -59,8 +60,9 @@ public class Controller {
      * Errorid:
      * Kasutaja on juba olemas.
      * Kasutajanime lahter on tühi.
+     * Emaili lahter on tühi.
      * Parooli lahter on tühi
-     *
+     * Nõrk salasõna
      *
      */
     @GetMapping(value = "/register")
@@ -74,22 +76,33 @@ public class Controller {
 
     @RequestMapping(value = "/registerSend", method = {RequestMethod.POST})
     @ResponseBody
-    public void register(@RequestParam String username, @RequestParam String password, HttpServletResponse response) throws IOException {
+    public void register(@RequestParam String username, @RequestParam String email, @RequestParam String password, HttpServletResponse response) throws IOException {
+        /**
+         * Check if username is already registered
+         * Check if email is already registered
+         * Check if email is valid email
+         */
+
+
+
 
         if (username.isBlank()) {
             response.sendRedirect("/register?error=username");
+            return;
+        }
+        if (email.isBlank()) {
+            response.sendRedirect("/register?error=email");
             return;
         }
         if (password.isBlank()) {
             response.sendRedirect("/register?error=password");
             return;
         }
-        List<Customer> abc = repository.findByName(username);
-        System.out.println("abc length: " + abc.size());
+        List<Kasutaja> abc = repository.findByName(username);
 
         if (Objects.isNull(abc) || abc.size() == 0) {
             // Account doesn't exist
-            repository.save(new Customer(username, password));
+            repository.save(new Kasutaja(username, email, password));
             response.sendRedirect("/");
             return;
         }

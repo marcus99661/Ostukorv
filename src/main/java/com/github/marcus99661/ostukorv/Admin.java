@@ -19,7 +19,7 @@ public class Admin {
     @Override
     public String toString() {
         return String.format(
-                "Customer[id=%s, name='%s', password='%s']",
+                "Admin[id=%s, name='%s', password='%s']",
                 id, name, password);
     }
 

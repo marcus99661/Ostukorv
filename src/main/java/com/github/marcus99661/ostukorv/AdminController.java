@@ -19,41 +19,49 @@ import java.util.Objects;
 
 @org.springframework.stereotype.Controller
 @RequestMapping("/admin")
-public class adminController {
+public class AdminController {
 
     static Algorithm algorithm = Algorithm.HMAC256("6643110C5628FFF59EDF76D82D5BF573BF800F16A4D65DFB1E5D6F1A46296D0B");
 
     @Autowired
-    public AdminRepository adminRepository;
+    private AdminRepository adminRepository;
 
     @Autowired
     private MongoTemplate mt;
 
-    public adminController(MongoTemplate mt, AdminRepository repository) {
+    @Autowired
+    private ToodeRepository toodeRepository;
+
+    public AdminController(MongoTemplate mt, AdminRepository repository, ToodeRepository toodeRepository) {
         this.mt = mt;
         this.adminRepository = repository;
+        this.toodeRepository = toodeRepository;
     }
 
     @GetMapping("")
-    @ResponseBody
     public String adminIndex(@RequestParam(required = false) String error, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
         // if no session cookie redirect to /login
+        System.out.println("SIIN OLEME");
         String token = getToken(request.getCookies());
         if (token.isBlank()) {
             response.sendRedirect("/admin/login");
-            return "";
+            return "adminTooted";
         }
         // if session token then validate
         if (!validatetoken(token)) {
             response.sendRedirect("/admin/login");
-            return "";
+            return "adminTooted";
         } else {
-            return "admin page";
+            List<Toode> tooted = toodeRepository.findAll();
+            System.out.println(tooted);
+            model.addAttribute("tooted", tooted);
+            return "adminTooted";
         }
     }
 
     @GetMapping("/")
     public void adminIndex2(@RequestParam(required = false) String error, Model model, HttpServletResponse response) throws IOException {
+        System.out.println("SIIN ME OLEME");
         response.sendRedirect("/admin");
         return;
     }
@@ -67,8 +75,7 @@ public class adminController {
             return "adminLogin";
         } else if (validatetoken(token)) {
             // if token is correct
-            response.sendRedirect("/admin");
-            return "";
+            return "/admin";
         } else {
             // if token is not correct - remove cookie
             Cookie cookie = new Cookie("token", null);
@@ -91,19 +98,22 @@ public class adminController {
             return;
         }
 
-        System.out.println(asd.size());
-
         if (asd.get(0).password.equals(password)) {
             // if password is correct
             String token = JWT.create()
                     .withSubject(username)
                     .sign(algorithm);
-            response.addCookie(new Cookie("token", token));
+            response.addCookie(new Cookie("admin", token));
             response.sendRedirect("/admin");
             return;
         }
         response.sendRedirect("/admin");
     }
+
+
+
+
+
 
 
     public static String getToken(Cookie[] cookies) {
@@ -112,7 +122,7 @@ public class adminController {
             return token;
         }
         for (Cookie i : cookies) {
-            if (i.getName().equalsIgnoreCase("token")) {
+            if (i.getName().equalsIgnoreCase("admin")) {
                 token = i.getValue();
                 break;
             }
