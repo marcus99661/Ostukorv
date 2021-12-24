@@ -45,20 +45,19 @@ public class AdminController {
         String token = getToken(request.getCookies());
         if (token.isBlank()) {
             response.sendRedirect("/admin/login");
-            return "adminTooted";
+            return "admin/admin";
         }
         // if session token then validate
         if (!validatetoken(token)) {
             response.sendRedirect("/admin/login");
-            return "adminTooted";
+            return "admin/admin";
         } else {
             List<Toode> tooted = toodeRepository.findAll();
             System.out.println(tooted);
             model.addAttribute("tooted", tooted);
-            return "adminTooted";
+            return "admin/admin";
         }
     }
-
     @GetMapping("/")
     public void adminIndex2(@RequestParam(required = false) String error, Model model, HttpServletResponse response) throws IOException {
         System.out.println("SIIN ME OLEME");
@@ -72,18 +71,19 @@ public class AdminController {
         String token = getToken(request.getCookies());
         if (token.isBlank()) {
             // no cookie
-            return "adminLogin";
+            return "admin/adminLogin";
         } else if (validatetoken(token)) {
             // if token is correct
-            return "/admin";
+            // SEE KOHT VISKAB 500 ERROR
+            response.sendRedirect("/admin");
+            return "admin/admin";
         } else {
             // if token is not correct - remove cookie
             Cookie cookie = new Cookie("token", null);
             response.addCookie(cookie);
-            return "adminLogin";
+            return "admin/adminLogin";
         }
     }
-
     @PostMapping("/sendLogin")
     public void adminSendLogin(@RequestParam String username, @RequestParam String password, HttpServletResponse response) throws IOException {
         System.out.println(username);
@@ -111,7 +111,24 @@ public class AdminController {
     }
 
 
+    @GetMapping("/toode")
+    public String toodeteMuutmine(@RequestParam String kood) {
+        // JWT KONTROLL
+        // Annab kõik Toodet millegi pärast
+        List<Toode> tooteList = toodeRepository.findByKood(kood);
 
+        if (Objects.isNull(tooteList)) {
+            System.out.println("TOOTEKOOD ON VALE");
+            return "admin/toode";
+        }
+
+        Toode toode = tooteList.get(0);
+
+        System.out.println(toode);
+
+
+        return "admin/toode";
+    }
 
 
 

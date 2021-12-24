@@ -8,4 +8,6 @@ public interface ToodeRepository extends MongoRepository<Toode, String> {
 
         public List<Toode> findByName(String name);
 
+        public List<Toode> findByKood(String kood);
+
 }

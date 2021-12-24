@@ -10,20 +10,27 @@ public class Toode {
     @Id
     public String id;
 
-    // TULEB PANNA CONSTRUCTORISSE, TOSTRING, GETTER JA SETTER
-    //public String tooteKood;
+    /**
+     * TULEB PANNA CONSTRUCTORISSE, TOSTRING, GETTER JA SETTER
+     */
+    public String kood;
     public String name;
     public String picLoc;
     public String desc;
     public String price;
     public String amount;
+    // Toode tägid, mille järgi saab otsida ja soovitada
+    // ArrayList<String> tags;
+    // List reviewedest (kasutaja, hinnang, notes, LocalDateTime kell)
+    // ArrayList<Review> reviewed;
     // List allahindlustega (algus, lõpp)
-    //ArrayList<Allahindlus> allahindlused;
+    // ArrayList<Allahindlus> allahindlused;
 
 
     public Toode() {}
 
-    public Toode(String name, String picLoc, String desc, String price, String amount) {
+    public Toode(String kood, String name, String picLoc, String desc, String price, String amount) {
+        this.kood = kood;
         this.name = name;
         this.picLoc = picLoc;
         this.desc = desc;
@@ -34,8 +41,8 @@ public class Toode {
     @Override
     public String toString() {
         return String.format(
-                "Toode[id=%s, name='%s', picLoc='%s', desc='%s', price='%s', amount='%s']",
-                id, name, picLoc, desc, price, amount);
+                "Toode[kood=%s, name='%s', picLoc='%s', desc='%s', price='%s', amount='%s']",
+                kood, name, picLoc, desc, price, amount);
     }
 
     public String getId() {
@@ -56,6 +63,9 @@ public class Toode {
     public String getAmount() {
         return amount;
     }
+    public String getKood() {
+        return kood;
+    }
 
     public void setId(String id) {
         this.id = id;
@@ -74,5 +84,8 @@ public class Toode {
     }
     public void setAmount(String amount) {
         this.amount = amount;
+    }
+    public void setKood(String kood) {
+        this.kood = kood;
     }
 }
