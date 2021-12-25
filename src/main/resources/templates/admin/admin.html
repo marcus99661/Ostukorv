@@ -26,8 +26,8 @@
                     <td><span th:text="${toode.desc}"> Seletus </span></td>
                     <td><span th:text="${toode.price}"> Hind </span></td>
                     <td><span th:text="${toode.amount}"> Kogus </span></td>
-                    <td><button type="button"> Muuda </button></td> <!-- th:onclick="'window.location.href=\'/toode?kood=' + ${toode.kood} + '\''" -->
-                    <td><button type="button"> Eemalda </button></td>
+                    <td><button type="button" th:attr="onclick='window.location.href=\'/admin/toode?kood=' + ${toode.kood} + '\''"> Muuda </button></td> <!-- th:onclick="'window.location.href=\'/toode?kood=' + ${toode.kood} + '\''"     onclick="window.location.href='/admin/toode?kood=ABC3'" -->
+                    <td><button type="button" th:attr="onclick='window.location.href=\'/admin/toodeRemove?kood=' + ${toode.kood} + '\''"> Eemalda </button></td>
                 </div>
             </tr>
             </tbody>

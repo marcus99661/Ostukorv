@@ -53,7 +53,7 @@ public class AdminController {
             return "admin/admin";
         } else {
             List<Toode> tooted = toodeRepository.findAll();
-            System.out.println(tooted);
+            //System.out.println(tooted);
             model.addAttribute("tooted", tooted);
             return "admin/admin";
         }
@@ -75,7 +75,7 @@ public class AdminController {
         } else if (validatetoken(token)) {
             // if token is correct
             // SEE KOHT VISKAB 500 ERROR
-            response.sendRedirect("/admin");
+            response.sendRedirect("/admin/");
             return "admin/admin";
         } else {
             // if token is not correct - remove cookie
@@ -112,24 +112,79 @@ public class AdminController {
 
 
     @GetMapping("/toode")
-    public String toodeteMuutmine(@RequestParam String kood) {
+    public String toodeteMuutmine(@RequestParam String kood, Model model) {
         // JWT KONTROLL
-        // Annab kõik Toodet millegi pärast
         List<Toode> tooteList = toodeRepository.findByKood(kood);
 
-        if (Objects.isNull(tooteList)) {
+        if (kood.equals("new")) {
+            model.addAttribute("kood", "");
+            model.addAttribute("name", "");
+            model.addAttribute("price", "");
+            model.addAttribute("amount", "");
+            model.addAttribute("desc", "");
+
+            return "admin/toodeNew";
+        }
+
+        if (Objects.isNull(tooteList) || tooteList.size() == 0) {
             System.out.println("TOOTEKOOD ON VALE");
+            model.addAttribute("desc", "TOOTEKOOD ON VALE");
             return "admin/toode";
         }
 
         Toode toode = tooteList.get(0);
 
-        System.out.println(toode);
-
+        model.addAttribute("kood", toode.getKood());
+        model.addAttribute("name", toode.getName());
+        model.addAttribute("price", toode.getPrice());
+        model.addAttribute("amount", toode.getAmount());
+        model.addAttribute("desc", toode.getDesc());
 
         return "admin/toode";
     }
 
+    @PostMapping("/toodeUpdate")
+    public void toodeUpdate(@RequestParam String kood, @RequestParam String name, @RequestParam String price, @RequestParam String amount, @RequestParam String desc, HttpServletResponse response) throws IOException {
+
+        /*
+        System.out.println(kood);
+        System.out.println(name);
+        System.out.println(price);
+        System.out.println(amount);
+        System.out.println(desc);
+         */
+
+        List<Toode> asd = toodeRepository.findByKood(kood);
+
+        if (Objects.isNull(asd) || asd.size() == 0) {
+            toodeRepository.save(new Toode(kood, name, "auto.png", desc, price, amount));
+            response.sendRedirect("/admin");
+            return;
+        }
+
+        Toode temp = toodeRepository.findByKood(kood).get(0);
+        temp.setAmount(amount);
+        temp.setName(name);
+        temp.setPrice(price);
+        temp.setDesc(desc);
+        //temp.setPicLoc();
+
+        //toodeRepository.save(new Toode(kood, name, "auto.png", desc, price, amount));
+        toodeRepository.save(temp);
+
+        response.sendRedirect("/admin");
+    }
+
+    @GetMapping("/toodeRemove")
+    public void toodeRemove(@RequestParam String kood, HttpServletResponse response) throws IOException {
+        toodeRepository.deleteToodeByKood(kood);
+        response.sendRedirect("/admin");
+    }
+
+    @GetMapping("/toodeAdd")
+    public void toodeAdd(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/admin/toode?kood=new");
+    }
 
 
 

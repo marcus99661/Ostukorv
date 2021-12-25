@@ -17,11 +17,8 @@
                 <textarea name="amount" type="number" class="price" style="width:10%; height: 40px;" th:text="${amount}"></textarea>
                 <h1>Toote kirjeldus</h1>
                 <textarea name="desc" class="desc" style="width:50%; height: 400px;" th:text="${desc}"></textarea>
-
-                
-                <textarea name="kood" th:text="${kood}" style="display:none;"></textarea>
-
-
+                <h1>Tootekood</h1>
+                <textarea name="kood" th:text="${kood}" style="width:10%; height: 40px;"></textarea>
                 <input type="submit" class="btn" style="cursor:pointer;" value="Salvesta">
             </form>
         </section>
