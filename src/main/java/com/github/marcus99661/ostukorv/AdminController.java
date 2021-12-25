@@ -74,7 +74,6 @@ public class AdminController {
             return "admin/adminLogin";
         } else if (validatetoken(token)) {
             // if token is correct
-            // SEE KOHT VISKAB 500 ERROR
             response.sendRedirect("/admin/");
             return "admin/admin";
         } else {
