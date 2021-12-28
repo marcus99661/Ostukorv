@@ -5,11 +5,14 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import org.apache.commons.codec.binary.Hex;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +21,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.Objects;
+import java.security.MessageDigest;
+import java.util.*;
+
+import static ch.qos.logback.core.encoder.ByteArrayUtil.hexStringToByteArray;
 
 @org.springframework.stereotype.Controller
 @RequestMapping("/admin")
@@ -36,10 +41,17 @@ public class AdminController {
     @Autowired
     private ToodeRepository toodeRepository;
 
-    public AdminController(MongoTemplate mt, AdminRepository repository, ToodeRepository toodeRepository) {
+    private PiltService pildiTeenus = new PiltService();
+
+    //@Autowired
+    //private PiltRepository piltRepository;
+
+    public AdminController(MongoTemplate mt, AdminRepository repository, ToodeRepository toodeRepository, PiltRepository piltRepository) {
         this.mt = mt;
         this.adminRepository = repository;
         this.toodeRepository = toodeRepository;
+        //this.piltRepository = piltRepository;
+        pildiTeenus.photoRepo = piltRepository;
     }
 
     @GetMapping("")
@@ -89,8 +101,8 @@ public class AdminController {
     }
     @PostMapping("/sendLogin")
     public void adminSendLogin(@RequestParam String username, @RequestParam String password, HttpServletResponse response) throws IOException {
-        System.out.println(username);
-        System.out.println(password);
+        //System.out.println(username);
+        //System.out.println(password);
 
         List<Admin> asd = adminRepository.findByName(username);
 
@@ -136,7 +148,16 @@ public class AdminController {
         }
 
         Toode toode = tooteList.get(0);
-
+        System.out.println(toode);
+        /* Kui pilti polnud
+        if (!(toode.getImage().size()==0)) {
+            Pilt a = pildiTeenus.getPhoto(toode.getImage().get(0));
+            model.addAttribute("image", Base64.getEncoder().encodeToString(a.getImage().getData()));
+        }
+         */
+        Pilt a = pildiTeenus.getPhoto(toode.getImage().get(0));
+        System.out.println(a.getHash());
+        model.addAttribute("image", Base64.getEncoder().encodeToString(a.getImage().getData()));
         model.addAttribute("kood", toode.getKood());
         model.addAttribute("name", toode.getName());
         model.addAttribute("price", toode.getPrice());
@@ -146,68 +167,52 @@ public class AdminController {
         return "admin/toode";
     }
 
-    private static void getAllFiles(File curDir) {
-
-        File[] filesList = curDir.listFiles();
-        for(File f : filesList){
-            if(f.isDirectory())
-                System.out.println("Directory: " + f.getName());
-            if(f.isFile()){
-                System.out.println("File: " + f.getName());
-            }
-        }
-
-    }
-
     @PostMapping("/toodeUpdate")
     public void toodeUpdate(HttpServletRequest request, @RequestParam(value = "file", required = false) MultipartFile multipart, @RequestParam String kood, @RequestParam String name, @RequestParam String price, @RequestParam String amount, @RequestParam String desc, HttpServletResponse response) throws IOException {
+        // 16MB limit
+        System.out.println(multipart.getBytes().length);
 
-        System.out.println("File suurus: " + multipart.getSize());
-
-
-
-
-
-
-        File curDir = new File(".");
-        getAllFiles(curDir);
-
-        File file = new File("asd.png");
-        multipart.transferTo(file);
-
-        try {
-            System.out.println(multipart.getOriginalFilename());
-            //String filePath = request.getServletContext().getRealPath("/");
-            //System.out.println(filePath);
-            //multipart.transferTo(new File(filePath));
-            //Path path = Paths.get("/docker-leht/tere.png");
-            //multipart.transferTo(path);
-        } catch (Exception e) {
-            System.out.println(e);
-            System.out.println("ei ole pilti");
-        }
-        /*
-        System.out.println(kood);
-        System.out.println(name);
-        System.out.println(price);
-        System.out.println(amount);
-        System.out.println(desc);
+        /**
+         * pilt byte[] -> SHA256 -> findByHash()
          */
+
+        // Default pildi hash
+        String pildiHash = "8d0f20006bf035706e38f835a6f912d16aad25a14003c3221d4d633ba77a7855";
+
+        if (multipart.getBytes().length > 0) {
+            // Kui saadetakse pilt
+            try {
+                // Teeb hashi
+                MessageDigest md = MessageDigest.getInstance("SHA-256");
+                md.update(multipart.getBytes(), 0, multipart.getBytes().length);
+                pildiHash = Hex.encodeHexString(md.digest());
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            // Kontrollib kas pilt on juba olemas hashi järgi
+            if (Objects.isNull(pildiTeenus.getPhoto(pildiHash))) {
+                // Pilti ei ole andmebaasis
+                pildiTeenus.addPhoto(multipart.getOriginalFilename(), multipart);
+            }
+        }
 
         List<Toode> asd = toodeRepository.findByKood(kood);
 
         if (Objects.isNull(asd) || asd.size() == 0) {
-            toodeRepository.save(new Toode(kood, name, "auto.png", desc, price, amount));
+            toodeRepository.save(new Toode(kood, name, desc, price, amount, new ArrayList<String>(Arrays.asList(pildiHash))));
             response.sendRedirect("/admin");
             return;
         }
 
-        Toode temp = toodeRepository.findByKood(kood).get(0);
+        Toode temp = asd.get(0);
+        /**
+         * VÕIMALUS LISADA MITU PILTI
+         */
         temp.setAmount(amount);
         temp.setName(name);
         temp.setPrice(price);
         temp.setDesc(desc);
-        //temp.setPicLoc();
+        temp.setImage(new ArrayList<String>(Arrays.asList(pildiHash)));
 
         toodeRepository.save(temp);
 

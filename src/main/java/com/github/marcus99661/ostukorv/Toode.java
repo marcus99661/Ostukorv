@@ -15,10 +15,11 @@ public class Toode {
      */
     public String kood;
     public String name;
-    public String picLoc;
     public String desc;
     public String price;
     public String amount;
+    // ArrayList täidetud Image ID-ga (service.getById)
+    ArrayList<String> image;
     // Toode tägid, mille järgi saab otsida ja soovitada
     // ArrayList<String> tags;
     // List reviewedest (kasutaja, hinnang, notes, LocalDateTime kell)
@@ -29,20 +30,20 @@ public class Toode {
 
     public Toode() {}
 
-    public Toode(String kood, String name, String picLoc, String desc, String price, String amount) {
+    public Toode(String kood, String name, String desc, String price, String amount, ArrayList<String> image) {
         this.kood = kood;
         this.name = name;
-        this.picLoc = picLoc;
         this.desc = desc;
         this.price = price;
         this.amount = amount;
+        this.image = image;
     }
 
     @Override
     public String toString() {
         return String.format(
-                "Toode[kood=%s, name='%s', picLoc='%s', desc='%s', price='%s', amount='%s']",
-                kood, name, picLoc, desc, price, amount);
+                "Toode[kood=%s, name='%s', desc='%s', price='%s', amount='%s', images='%s']",
+                kood, name, desc, price, amount, image.toString());
     }
 
     public String getId() {
@@ -50,9 +51,6 @@ public class Toode {
     }
     public String getName() {
         return name;
-    }
-    public String getPicLoc() {
-        return picLoc;
     }
     public String getDesc() {
         return desc;
@@ -66,15 +64,15 @@ public class Toode {
     public String getKood() {
         return kood;
     }
+    public ArrayList<String> getImage() {
+        return image;
+    }
 
     public void setId(String id) {
         this.id = id;
     }
     public void setName(String name) {
         this.name = name;
-    }
-    public void setPicLoc(String picLoc) {
-        this.picLoc = picLoc;
     }
     public void setDesc(String desc) {
         this.desc = desc;
@@ -87,5 +85,8 @@ public class Toode {
     }
     public void setKood(String kood) {
         this.kood = kood;
+    }
+    public void setImage(ArrayList<String> imageId) {
+        this.image = imageId;
     }
 }
