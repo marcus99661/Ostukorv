@@ -8,7 +8,8 @@
     <body>
         <section class="start">
             <h1>Toote muutmine</h1>
-            <form method="POST" action="/admin/toodeUpdate">
+            <form method="POST" action="/admin/toodeUpdate" enctype="multipart/form-data">
+                <input type="file" name="file"/>
                 <h1>Toote nimi</h1>
                 <textarea name="name" class="name" style="width:25%; height: 40px;" maxlength="100" th:text="${name}"></textarea>
                 <h1>Toote hind</h1>

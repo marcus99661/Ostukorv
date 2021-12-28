@@ -16,6 +16,8 @@ services:
       - MONGO_DB_PASSWORD=useruseruser111
     networks:
       main-network:
+    volumes:
+      - ./docker-data-tere:/data/db
     
   web:
     build:
@@ -38,6 +40,8 @@ services:
       - SPRING_DATA_MONGODB_DATABASE=db
     networks:
       main-network:
+    volumes:
+      - ./docker-leht:/data-leht/
 
 networks:
   main-network:

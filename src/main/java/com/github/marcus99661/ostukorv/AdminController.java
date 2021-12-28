@@ -9,11 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 
@@ -142,9 +146,46 @@ public class AdminController {
         return "admin/toode";
     }
 
-    @PostMapping("/toodeUpdate")
-    public void toodeUpdate(@RequestParam String kood, @RequestParam String name, @RequestParam String price, @RequestParam String amount, @RequestParam String desc, HttpServletResponse response) throws IOException {
+    private static void getAllFiles(File curDir) {
 
+        File[] filesList = curDir.listFiles();
+        for(File f : filesList){
+            if(f.isDirectory())
+                System.out.println("Directory: " + f.getName());
+            if(f.isFile()){
+                System.out.println("File: " + f.getName());
+            }
+        }
+
+    }
+
+    @PostMapping("/toodeUpdate")
+    public void toodeUpdate(HttpServletRequest request, @RequestParam(value = "file", required = false) MultipartFile multipart, @RequestParam String kood, @RequestParam String name, @RequestParam String price, @RequestParam String amount, @RequestParam String desc, HttpServletResponse response) throws IOException {
+
+        System.out.println("File suurus: " + multipart.getSize());
+
+
+
+
+
+
+        File curDir = new File(".");
+        getAllFiles(curDir);
+
+        File file = new File("asd.png");
+        multipart.transferTo(file);
+
+        try {
+            System.out.println(multipart.getOriginalFilename());
+            //String filePath = request.getServletContext().getRealPath("/");
+            //System.out.println(filePath);
+            //multipart.transferTo(new File(filePath));
+            //Path path = Paths.get("/docker-leht/tere.png");
+            //multipart.transferTo(path);
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("ei ole pilti");
+        }
         /*
         System.out.println(kood);
         System.out.println(name);
@@ -168,7 +209,6 @@ public class AdminController {
         temp.setDesc(desc);
         //temp.setPicLoc();
 
-        //toodeRepository.save(new Toode(kood, name, "auto.png", desc, price, amount));
         toodeRepository.save(temp);
 
         response.sendRedirect("/admin");
@@ -182,6 +222,7 @@ public class AdminController {
 
     @GetMapping("/toodeAdd")
     public void toodeAdd(HttpServletResponse response) throws IOException {
+        // Lisada "/admin" lehele nupp
         response.sendRedirect("/admin/toode?kood=new");
     }
 

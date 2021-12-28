@@ -8,7 +8,8 @@
     <body>
         <section class="start">
             <h1>Toote muutmine</h1>
-            <form method="POST" action="/admin/toodeUpdate">
+            <form method="POST" action="/admin/toodeUpdate" enctype="multipart/form-data">
+                <input type="file" name="file"/>
                 <h1>Toote nimi</h1>
                 <textarea name="name" class="name" style="width:25%; height: 40px;" maxlength="100" th:text="${name}"></textarea>
                 <h1>Toote hind</h1>
@@ -17,11 +18,7 @@
                 <textarea name="amount" type="number" class="price" style="width:10%; height: 40px;" th:text="${amount}"></textarea>
                 <h1>Toote kirjeldus</h1>
                 <textarea name="desc" class="desc" style="width:50%; height: 400px;" th:text="${desc}"></textarea>
-
-                
                 <textarea name="kood" th:text="${kood}" style="display:none;"></textarea>
-
-
                 <input type="submit" class="btn" style="cursor:pointer;" value="Salvesta">
             </form>
         </section>

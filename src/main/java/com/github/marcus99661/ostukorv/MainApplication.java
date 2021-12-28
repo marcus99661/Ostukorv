@@ -26,10 +26,10 @@ public class MainApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		repository.deleteAll();
-		adminRepository.deleteAll();
-		toodeRepository.deleteAll();
-
+		//repository.deleteAll();
+		//adminRepository.deleteAll();
+		//toodeRepository.deleteAll();
+		/*
 		adminRepository.save(new Admin("admin", "admin"));
 		repository.save(new Kasutaja("Bob", "bob@gmail.com", "Bobpassword"));
 		repository.save(new Kasutaja("Martin", "martin@gmail.com", "Martinpassword"));
@@ -37,5 +37,6 @@ public class MainApplication implements CommandLineRunner {
 		toodeRepository.save(new Toode("ABC2", "Tool", "tool.png", "Väga hea Razeri tool", "100", "5"));
 		toodeRepository.save(new Toode("ABC3","Monitor", "monitor.png", "Ülimalt hea Samsung 32 tolli, kumber, 144Hz ja väga hea video kvaliteet. Ülimalt hea Samsung 32 tolli, kumber, 144Hz ja väga hea video kvaliteet. Ülimalt hea Samsung 32 tolli, kumber, 144Hz ja väga hea video kvaliteet. Ülimalt hea Samsung 32 tolli, kumber, 144Hz ja väga hea video kvaliteet. Ülimalt hea Samsung 32 tolli, kumber, 144Hz ja väga hea video kvaliteet", "200", "10"));
 		toodeRepository.save(new Toode("ABC4","Tass", "tass.png", "Lamba pildiga tass", "5", "500"));
+		 */
 	}
 }
