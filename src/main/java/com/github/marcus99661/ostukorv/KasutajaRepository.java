@@ -6,6 +6,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface KasutajaRepository extends MongoRepository<Kasutaja, String> {
 
-    public List<Kasutaja> findByName(String name);
+    public List<Kasutaja> findByFirstName(String firstName);
+
+    public List<Kasutaja> findByEmail(String email);
 
 }

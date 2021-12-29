@@ -14,7 +14,7 @@ Hindade valuutat saab vahetada?
  - Keele vahetus funktsioon (Hetkel inglise ja eesti, jätab cookina meelde)
  - Otsingu lahter
  - Konto link
- - Ostukorvi ikoon
+ - Ostukorvi ikoon (saab lisada mitu toodet on ostukorvis)
 
  - Toodete kategooriad, max 8 ()
 
@@ -68,16 +68,19 @@ Lingid igasse kohta
  - Võib lisada brute-force vastase asja
 
 ## Toodete leht
- - Nupp millega saab lisada tooteid
+ - ~~Nupp millega saab lisada tooteid~~
 
- - Pikk nimekiri kus on kõik tooted (võetud toodete andmebaasist)
- - igal real on eraldi toode
- - iga toote juures on pilt, nimi, hind(euro), kogus, muutmise nupp, kustutamise nupp
+ - ~~Pikk nimekiri kus on kõik tooted (võetud toodete andmebaasist)~~
+ - ~~igal real on eraldi toode~~
+ - ~~iga toote juures on nimi, hind(euro), kogus, muutmise nupp, kustutamise nupp~~
    - alaosa kus on saab toote juurde lisada ajastatud allahindlus
+ - Kui toode on otsas siis on hall
 
 ## Toodete muutmis leht
 
- - saab muuta pilti (upload), nime, hinda, descriptioni
+ - Kontrollib, et ei oleks sama tootekood
+ - Kontrollib, et lahtrid on täidetud
+ - ~~saab muuta pilti (upload), nime, hinda, descriptioni~~
  - Eraldi koht kus saab vaadata/lisada/eemaldada allahindlusi (algusaeg, lõpuaeg, protsent)
 
 ## Tellimused

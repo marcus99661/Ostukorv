@@ -16,7 +16,7 @@ public class Toode {
     public String kood;
     public String name;
     public String desc;
-    public String price;
+    public double price;
     public String amount;
     // ArrayList täidetud Image ID-ga (service.getById)
     ArrayList<String> image;
@@ -30,7 +30,7 @@ public class Toode {
 
     public Toode() {}
 
-    public Toode(String kood, String name, String desc, String price, String amount, ArrayList<String> image) {
+    public Toode(String kood, String name, String desc, double price, String amount, ArrayList<String> image) {
         this.kood = kood;
         this.name = name;
         this.desc = desc;
@@ -55,7 +55,7 @@ public class Toode {
     public String getDesc() {
         return desc;
     }
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
     public String getAmount() {
@@ -77,7 +77,7 @@ public class Toode {
     public void setDesc(String desc) {
         this.desc = desc;
     }
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
     public void setAmount(String amount) {

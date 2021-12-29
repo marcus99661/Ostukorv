@@ -8,14 +8,16 @@ public class Kasutaja {
     @Id
     public String id;
 
-    public String name;
+    public String firstName;
+    public String lastName;
     public String email;
     public String password;
 
     public Kasutaja() {}
 
-    public Kasutaja(String name, String email, String password) {
-        this.name = name;
+    public Kasutaja(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
     }
@@ -23,15 +25,18 @@ public class Kasutaja {
     @Override
     public String toString() {
         return String.format(
-                "Kasutaja[id=%s, name='%s', email='%s', password='%s']",
-                id, name, email, password);
+                "Kasutaja[id=%s, first_name='%s', last_name='%s', email='%s', password='%s']",
+                id, firstName, lastName, email, password);
     }
 
     public String getId() {
         return id;
     }
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
+    }
+    public String getLastName() {
+        return lastName;
     }
     public String getEmail() {
         return email;
@@ -43,11 +48,14 @@ public class Kasutaja {
     public void setId(String id) {
         this.id = id;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
-    public String setEmail() {
-        return email;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
     public void setPassword(String password) {
         this.password = password;

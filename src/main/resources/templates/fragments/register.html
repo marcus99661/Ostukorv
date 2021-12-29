@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Notes login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link th:href="@{/css/login.css}" rel="stylesheet" />
+</head>
+<body>
+<div th:fragment="language">
+  <link th:href="@{/css/login.css}" rel="stylesheet" />
+  <div class="login-page">
+    <div class="form">
+      <p class="message">REGISTER</p>
+      <form class="post" method="post" action = '/sendRegister'>
+        <div class="alert" th:if="'first_name' == ${error}">Eesnime lahter ei tohi olla tühi</div>
+        <input type="text" placeholder="Eesnimi" name="first_name"/>
+        <div class="alert" th:if="'last_name' == ${error}">Perekonnanime lahter ei tohi olla tühi</div>
+        <input type="text" placeholder="Perekonnanimi" name="last_name"/>
+        <div class="alert" th:if="'email' == ${error}">E-maili lahter ei tohi olla tühi</div>
+        <div class="alert" th:if="'email_exists' == ${error}">E-mail on juba registreeritud</div>
+        <input type="email" placeholder="E-mail" name="email"/>
+        <div class="alert" th:if="'weak' == ${error}">Salasõna on liiga lühike</div>
+        <div class="alert" th:if="'password' == ${error}">Salasõna lahter ei tohi olla tühi</div>
+        <input type="password" placeholder="Salasõna" name="password"/>
+        <div class="alert" th:if="'compassword' == ${error}">Salasõna kinnitamis lahter ei tohi olla tühi</div>
+        <div class="alert" th:if="'not_same' == ${error}">Salasõnad ei ole samad</div>
+        <input type="password" placeholder="Kinnita salasõna" name="compassword"/>
+        <button type="submit">Register</button>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

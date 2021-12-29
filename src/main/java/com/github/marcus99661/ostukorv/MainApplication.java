@@ -26,6 +26,8 @@ public class MainApplication implements CommandLineRunner {
 	@Autowired
 	public PiltRepository piltRepository;
 
+	public static String defaultHash;
+
 	public static void main(String[] args) {
 		SpringApplication.run(MainApplication.class, args);
 	}
@@ -40,6 +42,7 @@ public class MainApplication implements CommandLineRunner {
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
 			md.update(a.getData(), 0, a.getData().length);
 			String hash = Hex.encodeHexString(md.digest());
+			defaultHash = hash;
 			System.out.println("Default hash: " + hash);
 			Pilt asd = new Pilt("default", a, hash);
 			piltRepository.save(asd);
@@ -47,13 +50,13 @@ public class MainApplication implements CommandLineRunner {
 			System.out.println(e);
 		}
 
+		//repository.save(new Kasutaja("Bob","Ross", "bob@gmail.com", "password"));
+
 		//repository.deleteAll();
 		//adminRepository.deleteAll();
 		//toodeRepository.deleteAll();
 		/*
 		adminRepository.save(new Admin("admin", "admin"));
-		repository.save(new Kasutaja("Bob", "bob@gmail.com", "Bobpassword"));
-		repository.save(new Kasutaja("Martin", "martin@gmail.com", "Martinpassword"));
 		 */
 		//toodeRepository.save(new Toode("ABC1", "Auto", "auto.png", "Hea auto", "10000", "1"));
 		//toodeRepository.save(new Toode("ABC2", "Tool", "tool.png", "Väga hea Razeri tool", "100", "5"));

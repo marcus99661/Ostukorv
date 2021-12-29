@@ -172,12 +172,9 @@ public class AdminController {
         // 16MB limit
         System.out.println(multipart.getBytes().length);
 
-        /**
-         * pilt byte[] -> SHA256 -> findByHash()
-         */
-
         // Default pildi hash
-        String pildiHash = "8d0f20006bf035706e38f835a6f912d16aad25a14003c3221d4d633ba77a7855";
+        //String pildiHash = "8d0f20006bf035706e38f835a6f912d16aad25a14003c3221d4d633ba77a7855";
+        String pildiHash = MainApplication.defaultHash;
 
         if (multipart.getBytes().length > 0) {
             // Kui saadetakse pilt
@@ -199,7 +196,7 @@ public class AdminController {
         List<Toode> asd = toodeRepository.findByKood(kood);
 
         if (Objects.isNull(asd) || asd.size() == 0) {
-            toodeRepository.save(new Toode(kood, name, desc, price, amount, new ArrayList<String>(Arrays.asList(pildiHash))));
+            toodeRepository.save(new Toode(kood, name, desc, Double.valueOf(price), amount, new ArrayList<String>(Arrays.asList(pildiHash))));
             response.sendRedirect("/admin");
             return;
         }
@@ -210,7 +207,7 @@ public class AdminController {
          */
         temp.setAmount(amount);
         temp.setName(name);
-        temp.setPrice(price);
+        temp.setPrice(Double.valueOf(price));
         temp.setDesc(desc);
         temp.setImage(new ArrayList<String>(Arrays.asList(pildiHash)));
 

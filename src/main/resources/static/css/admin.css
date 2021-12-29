@@ -4,3 +4,16 @@ table, th, td {
     margin-top: 50px;
     padding: 10px;
 }
+
+.lisa-toode {
+    float: right;
+    margin-right: 20px;
+    color: white;
+    background: green;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 30px;
+
+}
