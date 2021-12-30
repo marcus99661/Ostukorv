@@ -17,12 +17,12 @@
                 <input type="text" placeholder="E-mail" name="email"/>
                 <div class="alert" th:if="'password' == ${error}">Salasõna lahter ei tohi olla tühi</div>
                 <input type="password" placeholder="Password" name="password"/>
+                <div class="alert" th:if="'wrong' == ${error}">E-mail või salasõna on vale</div>
                 <button type="submit">login</button>
             </form>
             <a href="/register">
                 <button class="register">Register</button>
             </a>
-            <div class="alert" th:if="'wrong' == ${error}">E-mail või salasõna on vale</div>
         </div>
     </div>
 </div>

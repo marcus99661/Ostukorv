@@ -18,25 +18,28 @@ public class Toode {
     public String desc;
     public double price;
     public String amount;
-    // ArrayList täidetud Image ID-ga (service.getById)
-    ArrayList<String> image;
+    // ArrayList täidetud Image hashidega (service.findByHash)
+    public ArrayList<String> image;
+    // Igal tootel on üks kategooria kuhu asub
+    public String category;
     // Toode tägid, mille järgi saab otsida ja soovitada
-    // ArrayList<String> tags;
+    // public ArrayList<String> tags;
     // List reviewedest (kasutaja, hinnang, notes, LocalDateTime kell)
-    // ArrayList<Review> reviewed;
+    // public ArrayList<Review> reviews;
     // List allahindlustega (algus, lõpp)
-    // ArrayList<Allahindlus> allahindlused;
+    // public ArrayList<Allahindlus> discounts;
 
 
     public Toode() {}
 
-    public Toode(String kood, String name, String desc, double price, String amount, ArrayList<String> image) {
+    public Toode(String kood, String name, String desc, double price, String amount, ArrayList<String> image, String category) {
         this.kood = kood;
         this.name = name;
         this.desc = desc;
         this.price = price;
         this.amount = amount;
         this.image = image;
+        this.category = category;
     }
 
     @Override
@@ -67,6 +70,9 @@ public class Toode {
     public ArrayList<String> getImage() {
         return image;
     }
+    public String getCategory() {
+        return category;
+    }
 
     public void setId(String id) {
         this.id = id;
@@ -88,5 +94,8 @@ public class Toode {
     }
     public void setImage(ArrayList<String> imageId) {
         this.image = imageId;
+    }
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

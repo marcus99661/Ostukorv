@@ -40,8 +40,6 @@ services:
       - SPRING_DATA_MONGODB_DATABASE=db
     networks:
       main-network:
-    volumes:
-      - ./docker-leht:/data-leht/
 
 networks:
   main-network:

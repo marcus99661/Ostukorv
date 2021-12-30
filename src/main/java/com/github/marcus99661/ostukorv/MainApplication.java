@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.security.MessageDigest;
 import java.util.Base64;
+import java.util.Objects;
 
 @SpringBootApplication
 public class MainApplication implements CommandLineRunner {
@@ -44,8 +45,15 @@ public class MainApplication implements CommandLineRunner {
 			String hash = Hex.encodeHexString(md.digest());
 			defaultHash = hash;
 			System.out.println("Default hash: " + hash);
-			Pilt asd = new Pilt("default", a, hash);
-			piltRepository.save(asd);
+			Pilt asd;
+			if (Objects.isNull(piltRepository.findByName("default"))) {
+				asd = new Pilt("default", a, hash);
+			} else {
+				asd = piltRepository.findByName("default");
+			}
+
+
+			piltRepository.insert(asd);
 		} catch (Exception e) {
 			System.out.println(e);
 		}

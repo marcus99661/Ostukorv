@@ -204,6 +204,12 @@ public class Controller {
         return "main";
     }
 
+    @GetMapping("/toode")
+    public String toode(Model model) {
+        model.addAttribute("page", "kategooria");
+        return "main";
+    }
+
     public static String getToken(Cookie[] cookies) {
         String token = "";
         if (Objects.isNull(cookies)) {

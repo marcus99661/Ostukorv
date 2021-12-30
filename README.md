@@ -35,7 +35,7 @@ Asub - "/cart"
 
 ## Login
 
- - error - vale pass, ei tohi lahter tühi olla
+ - ~~error - vale pass, ei tohi lahter tühi olla~~
  - alert - (Peate sisselogima, et seda funktsiooni kasutada)
  - redirect=/supportchat
 
@@ -44,6 +44,18 @@ Asub - "/cart"
 Konto - "/konto"
 
  - Kontode tellimused jäetakse meelde (hiljem saab lisada review)
+
+## Toote leht
+
+ - Asub - "/toode/"
+ - Toote pilt
+ - Toote hind
+ - Toote kirjeldus
+ - 
+
+## Kategooria leht
+
+ - Asub - "/it", "/vaba-aeg"
 
 ## Otsingu funktsioon
 
@@ -57,8 +69,12 @@ Teeb andmebaasi kutse ja tagastab score järgi vasted (score oleneb mitu sõna o
 ## Admin page
 
 Asub - "/admin"
-Lingid igasse kohta
+Teha sammuti fragmendiga
 
+## Header
+
+ - Ligipääs igalepoole
+ - Logout nupp
 
 ### Audentimine
 
@@ -78,8 +94,10 @@ Lingid igasse kohta
 
 ## Toodete muutmis leht
 
- - Kontrollib, et ei oleks sama tootekood
- - Kontrollib, et lahtrid on täidetud
+ - Kontrollib, et pilt ei ületa limiiti
+ - Kontrollib, et price ei sisaldaks tähti
+ - Kontrollib, et pildi nimi ei ole "default"
+ - Kontrollib, et kõik lahtrid on täidetud
  - ~~saab muuta pilti (upload), nime, hinda, descriptioni~~
  - Eraldi koht kus saab vaadata/lisada/eemaldada allahindlusi (algusaeg, lõpuaeg, protsent)
 
@@ -100,7 +118,7 @@ Lingid igasse kohta
 
 
 
-
+sooduskupongid
 
 flash deals
 

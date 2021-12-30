@@ -6,4 +6,6 @@ public interface PiltRepository extends MongoRepository<Pilt, String> {
 
     public Pilt findByHash(String hash);
 
+    public Pilt findByName(String name);
+
 }

@@ -19,6 +19,18 @@
                 <textarea name="amount" type="number" class="price" style="width:10%; height: 40px;" th:text="${amount}"></textarea>
                 <h1>Toote kirjeldus</h1>
                 <textarea name="desc" class="desc" style="width:50%; height: 400px;" th:text="${desc}"></textarea>
+                <label for="category">Toote kategooria:</label>
+                <select name="category" id="category">
+                    <option value="it" th:selected="${category} == it ? true : false">IT</option>
+                    <option value="telefonid" th:selected="${category} == telefonid ? true : false">Telefonid</option>
+                    <option value="helitehnika" th:selected="${category} == helitehnika ? true : false">Helitehnika</option>
+                    <option value="kodumasinad" th:selected="${category} == kodumasinad ? true : false">Kodumasinad</option>
+                    <option value="moobel" th:selected="${category} == moobel ? true : false">Mööbel</option>
+                    <option value="koogitehnika" th:selected="${category} == koogitehinka ? true : false">Köögitehnika</option>
+                    <option value="ilu-ja-tervis" th:selected="${category} == ilu-ja-tervis ? true : false">Ilu ja tervis</option>
+                    <option value="meelelahutus" th:selected="${category} == meelelahutus ? true : false">Meelelahutus</option>
+                    <option value="vaba-aeg" th:selected="${category} == vaba-aeg ? true : false">Vaba aeg</option>
+                </select>
                 <textarea name="kood" th:text="${kood}" style="display:none;"></textarea>
                 <input type="submit" class="btn" style="cursor:pointer;" value="Salvesta">
             </form>

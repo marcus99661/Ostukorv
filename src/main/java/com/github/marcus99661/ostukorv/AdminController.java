@@ -30,7 +30,7 @@ import static ch.qos.logback.core.encoder.ByteArrayUtil.hexStringToByteArray;
 @RequestMapping("/admin")
 public class AdminController {
 
-    static Algorithm algorithm = Algorithm.HMAC256("6643110C5628FFF59EDF76D82D5BF573BF800F16A4D65DFB1E5D6F1A46296D0B");
+    static Algorithm algorithm = Algorithm.HMAC256("5543110C5628FFF59EDF76D82D5BF573BF800F16A4D65DFB1E5D6F1A46296D0B");
 
     @Autowired
     private AdminRepository adminRepository;
@@ -127,8 +127,13 @@ public class AdminController {
 
 
     @GetMapping("/toode")
-    public String toodeteMuutmine(@RequestParam String kood, Model model) {
-        // JWT KONTROLL
+    public String toodeteMuutmine(@RequestParam String kood, Model model, HttpServletResponse response, HttpServletRequest request) throws IOException {
+        if (!validatetoken(getToken(request.getCookies()))) {
+            response.addCookie(new Cookie("admin", null));
+            response.sendRedirect("/admin");
+            return null;
+        }
+
         List<Toode> tooteList = toodeRepository.findByKood(kood);
 
         if (kood.equals("new")) {
@@ -163,13 +168,24 @@ public class AdminController {
         model.addAttribute("price", toode.getPrice());
         model.addAttribute("amount", toode.getAmount());
         model.addAttribute("desc", toode.getDesc());
+        model.addAttribute("category", toode.getCategory());
 
         return "admin/toode";
     }
 
     @PostMapping("/toodeUpdate")
-    public void toodeUpdate(HttpServletRequest request, @RequestParam(value = "file", required = false) MultipartFile multipart, @RequestParam String kood, @RequestParam String name, @RequestParam String price, @RequestParam String amount, @RequestParam String desc, HttpServletResponse response) throws IOException {
-        // 16MB limit
+    public void toodeUpdate(HttpServletRequest request, @RequestParam(value = "file", required = false) MultipartFile multipart, @RequestParam String kood, @RequestParam String name, @RequestParam String price, @RequestParam String amount, @RequestParam String desc, @RequestParam String category, HttpServletResponse response) throws IOException {
+        if (!validatetoken(getToken(request.getCookies()))) {
+            response.addCookie(new Cookie("admin", null));
+            response.sendRedirect("/admin");
+            return;
+        }
+        /**
+         * 16MB limiit
+         * Pildi nimi ei tohi olla "default"
+         * price ei tohi sisaldada tähti ega koma
+         * VAHEPEAL MUUDAB DEFAULT PILDI PEALE LAMPI
+         */
         System.out.println(multipart.getBytes().length);
 
         // Default pildi hash
@@ -196,7 +212,7 @@ public class AdminController {
         List<Toode> asd = toodeRepository.findByKood(kood);
 
         if (Objects.isNull(asd) || asd.size() == 0) {
-            toodeRepository.save(new Toode(kood, name, desc, Double.valueOf(price), amount, new ArrayList<String>(Arrays.asList(pildiHash))));
+            toodeRepository.save(new Toode(kood, name, desc, Double.valueOf(price), amount, new ArrayList<String>(Arrays.asList(pildiHash)), category));
             response.sendRedirect("/admin");
             return;
         }
@@ -210,6 +226,7 @@ public class AdminController {
         temp.setPrice(Double.valueOf(price));
         temp.setDesc(desc);
         temp.setImage(new ArrayList<String>(Arrays.asList(pildiHash)));
+        temp.setCategory(category);
 
         toodeRepository.save(temp);
 
@@ -217,14 +234,18 @@ public class AdminController {
     }
 
     @GetMapping("/toodeRemove")
-    public void toodeRemove(@RequestParam String kood, HttpServletResponse response) throws IOException {
-        toodeRepository.deleteToodeByKood(kood);
-        response.sendRedirect("/admin");
+    public void toodeRemove(@RequestParam String kood, HttpServletResponse response, HttpServletRequest request) throws IOException {
+        if (validatetoken(getToken(request.getCookies()))) {
+            toodeRepository.deleteToodeByKood(kood);
+            response.sendRedirect("/admin");
+        } else {
+            response.addCookie(new Cookie("admin", null));
+            response.sendRedirect("/admin");
+        }
     }
 
     @GetMapping("/toodeAdd")
     public void toodeAdd(HttpServletResponse response) throws IOException {
-        // Lisada "/admin" lehele nupp
         response.sendRedirect("/admin/toode?kood=new");
     }
 
