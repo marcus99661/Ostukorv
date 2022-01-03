@@ -530,6 +530,14 @@ mark,
   height: auto;
 }
 
+.img-uus {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 500px;
+    width: auto !important;
+}
+
 .img-thumbnail {
   padding: 0.25rem;
   background-color: #fff;

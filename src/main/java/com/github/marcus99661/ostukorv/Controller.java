@@ -1,6 +1,5 @@
 package com.github.marcus99661.ostukorv;
 
-
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -16,6 +15,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,10 +34,13 @@ public class Controller {
     @Autowired
     private ToodeRepository toodeRepository;
 
-    public Controller(MongoTemplate mt, KasutajaRepository repository, ToodeRepository toodeRepository) {
+    private PiltService pildiTeenus = new PiltService();
+
+    public Controller(MongoTemplate mt, KasutajaRepository repository, ToodeRepository toodeRepository, PiltRepository piltRepository) {
         this.mt = mt;
         this.repository = repository;
         this.toodeRepository = toodeRepository;
+        pildiTeenus.photoRepo = piltRepository;
     }
 
     /**
@@ -95,7 +99,7 @@ public class Controller {
     @ResponseBody
     public void sendRegister(@RequestParam String first_name, @RequestParam String last_name, @RequestParam String email, @RequestParam String password, @RequestParam String compassword, HttpServletResponse response) throws IOException {
         /**
-         * Check if email is already registered
+         * ~~Check if email is already registered~~
          * Check if email is valid email
          */
         /**
@@ -108,7 +112,6 @@ public class Controller {
          * compassword
          * not_same
          */
-
 
         if (first_name.isBlank()) {
             response.sendRedirect("/register?error=first_name");
@@ -142,9 +145,6 @@ public class Controller {
             response.sendRedirect("/register?error=email_exists");
             return;
         }
-
-
-
 
         List<Kasutaja> abc = repository.findByFirstName(first_name);
 
@@ -194,7 +194,7 @@ public class Controller {
 
     @GetMapping("/konto")
     public String konto(HttpServletResponse response, HttpServletRequest request, Model model) throws IOException {
-        String token = getToken(request.getCookies());
+        String token = getCookie(request.getCookies(), "session");
         if (token.isBlank()) {
             response.sendRedirect("/login");
             return null;
@@ -218,21 +218,57 @@ public class Controller {
     public String kategooria(Model model, @PathVariable String kategooria, @RequestParam(required = false) String p) {
         if (Objects.isNull(p)) {
             p = "1";
-            System.out.println("page is zero");
         }
         model.addAttribute("page", "kategooria");
         // Kontrollib kas kategooria on listis
 
         // Võtab kõik tooted andmebaasist mille kategooria on antud
         List<Toode> kategooriaTooted = toodeRepository.findByCategory(kategooria);
-        model.addAttribute("tooted", kategooriaTooted);
+        List<Toode> uusTooteList = new ArrayList<>();
+        for (Toode temp : kategooriaTooted) {
+            Pilt a = pildiTeenus.getPhoto(temp.getImage().get(0));
+            temp.setThumbnail(Base64.getEncoder().encodeToString(a.getImage().getData()));
+            uusTooteList.add(temp);
+        }
+        model.addAttribute("tooted", uusTooteList);
+        System.out.println(uusTooteList);
         return "main";
     }
 
     @GetMapping("/toode")
-    public String toode(Model model) {
+    public String toode(Model model, @RequestParam String kood) {
         model.addAttribute("page", "toode");
+
+        Toode toode = toodeRepository.findByKood(kood).get(0);
+        System.out.println(toode);
+
+        Pilt a = pildiTeenus.getPhoto(toode.getImage().get(0));
+        toode.setThumbnail(Base64.getEncoder().encodeToString(a.getImage().getData()));
+
+        List<String> pildid = new ArrayList<>();
+
+        for (String i : toode.getImage()) {
+            Pilt b = pildiTeenus.getPhoto(toode.getImage().get(0));
+            pildid.add(Base64.getEncoder().encodeToString(b.getImage().getData()));
+        }
+
+        model.addAttribute("name", toode.getName());
+        model.addAttribute("price", toode.getPrice());
+        model.addAttribute("desc", toode.getDesc());
+        model.addAttribute("thumbnail", toode.getThumbnail());
+        //model.addAttribute("pics", pildid);
         return "main";
+    }
+
+    @GetMapping("lisaToode")
+    public void lisaToode(HttpServletResponse response, HttpServletRequest request, @RequestParam String kood) {
+        String tooted = getCookie(request.getCookies(), "tooted");
+        if (tooted.isBlank()) {
+            tooted += "1=" + kood;
+        } else {
+            tooted += ",1=" + kood;
+        }
+        response.addCookie(new Cookie("tooted", tooted));
     }
 
     @GetMapping("/ostukorv")
@@ -247,13 +283,13 @@ public class Controller {
         return "main";
     }
 
-    public static String getToken(Cookie[] cookies) {
+    public static String getCookie(Cookie[] cookies, String name) {
         String token = "";
         if (Objects.isNull(cookies)) {
             return token;
         }
         for (Cookie i : cookies) {
-            if (i.getName().equalsIgnoreCase("session")) {
+            if (i.getName().equalsIgnoreCase(name)) {
                 token = i.getValue();
                 break;
             }

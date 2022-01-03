@@ -55,7 +55,8 @@ Konto - "/konto"
 
 ## Kategooria leht
 
- - Asub - "/it", "/vaba-aeg"
+ - Asub - "/kategooria/it", "/kategooria/vaba-aeg"
+ - Teha korda page numbrid
 
 ## Otsingu funktsioon
 

@@ -1,5 +1,6 @@
 package com.github.marcus99661.ostukorv;
 
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;
@@ -18,15 +19,31 @@ public class Toode {
     public String desc;
     public double price;
     public String amount;
-    // ArrayList täidetud Image hashidega (service.findByHash)
+
+    /**
+     * pilt, BASE64 encoded String, esimene pilt image listist
+     */
+    public String thumbnail;
+
+    /**
+     * ArrayList täidetud Image hashidega (service.findByHash)
+     */
     public ArrayList<String> image;
-    // Igal tootel on üks kategooria kuhu asub
     public String category;
-    // Toode tägid, mille järgi saab otsida ja soovitada
+
+    /**
+     * Toote tägid, mille järgi saab otsida ja soovitada
+     */
     // public ArrayList<String> tags;
-    // List reviewedest (kasutaja, hinnang, notes, LocalDateTime kell)
+
+    /**
+     * List reviewdest (kasutaja, hinnang, notes, LocalDateTime kell)
+     */
     // public ArrayList<Review> reviews;
-    // List allahindlustega (algus, lõpp)
+
+    /**
+     * List allahindlustega (algus, lõpp)
+     */
     // public ArrayList<Allahindlus> discounts;
 
 
@@ -73,6 +90,9 @@ public class Toode {
     public String getCategory() {
         return category;
     }
+    public String getThumbnail() {
+        return thumbnail;
+    }
 
     public void setId(String id) {
         this.id = id;
@@ -97,5 +117,8 @@ public class Toode {
     }
     public void setCategory(String category) {
         this.category = category;
+    }
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }
