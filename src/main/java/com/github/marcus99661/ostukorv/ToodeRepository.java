@@ -11,5 +11,7 @@ public interface ToodeRepository extends MongoRepository<Toode, String> {
 
         public List<Toode> findByKood(String kood);
 
-        Toode deleteToodeByKood(String kood);
+        public Toode deleteToodeByKood(String kood);
+
+        public List<Toode> findByCategory(String category);
 }

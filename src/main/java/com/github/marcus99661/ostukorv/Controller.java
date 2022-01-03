@@ -30,9 +30,13 @@ public class Controller {
     @Autowired
     private MongoTemplate mt;
 
-    public Controller(MongoTemplate mt, KasutajaRepository repository) {
+    @Autowired
+    private ToodeRepository toodeRepository;
+
+    public Controller(MongoTemplate mt, KasutajaRepository repository, ToodeRepository toodeRepository) {
         this.mt = mt;
         this.repository = repository;
+        this.toodeRepository = toodeRepository;
     }
 
     /**
@@ -204,9 +208,42 @@ public class Controller {
         return "main";
     }
 
+    @GetMapping("/kategooria")
+    public String kategooria(Model model) {
+        model.addAttribute("page", "kategooria");
+        return "main";
+    }
+
+    @GetMapping("/kategooria/{kategooria}")
+    public String kategooria(Model model, @PathVariable String kategooria, @RequestParam(required = false) String p) {
+        if (Objects.isNull(p)) {
+            p = "1";
+            System.out.println("page is zero");
+        }
+        model.addAttribute("page", "kategooria");
+        // Kontrollib kas kategooria on listis
+
+        // Võtab kõik tooted andmebaasist mille kategooria on antud
+        List<Toode> kategooriaTooted = toodeRepository.findByCategory(kategooria);
+        model.addAttribute("tooted", kategooriaTooted);
+        return "main";
+    }
+
     @GetMapping("/toode")
     public String toode(Model model) {
-        model.addAttribute("page", "kategooria");
+        model.addAttribute("page", "toode");
+        return "main";
+    }
+
+    @GetMapping("/ostukorv")
+    public String ostukorv(Model model) {
+        model.addAttribute("page", "ostukorv");
+        return "main";
+    }
+
+    @GetMapping("/tellimus")
+    public String tellimus(Model model) {
+        model.addAttribute("page", "tellimus");
         return "main";
     }
 

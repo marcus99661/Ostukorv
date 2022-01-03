@@ -1,212 +1,231 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="utf-8">
-    <title>Ostukorv</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" th:href="@{/img/favicon.jpg}"/>
-    <!-- css -->
-    <link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/css/shopper.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/css/wb17_shopper.css}" />
-</head>
-<body>
-<div id="wrapper" class="home-page">
-    <!-- start header -->
-    <header>
-        <div id="wb_navigationLayoutGrid">
-            <div id="navigationLayoutGrid">
-                <div class="row">
-                    <div class="col-1">
-                        <div id="wb_navigationHeading" style="display:inline-block;width:100%;z-index:0;">
-                            <h1 id="navigationHeading">E-POOD</h1>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="col-2-padding">
-                            <form name="SiteSearch1_form" id="SiteSearch1_form" role="search" accept-charset="UTF-8" style="display:inline" onsubmit="return searchPage(features)">
-                                <input type="text" id="SiteSearch1" style="display:block;width: 100%;height:40px;z-index:1;" name="SiteSearch1" value="" spellcheck="false" placeholder="Otsi" role="searchbox"></form>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div id="wb_navigationMenu" style="display:inline-block;width:100%;z-index:2;vertical-align:top;">
-                            <ul id="navigationMenu">
-                                <li><a href="/konto">Konto</a></li>
-                            </ul>
+    <title>EShopper - Bootstrap Shop Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
 
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" th:href="@{https://fonts.gstatic.com}">
+    <link th:href="@{https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap}" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css}" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}" />
+    <link th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar Start -->
+    <div class="container-fluid mb-5">
+        <div class="row border-top px-xl-5">
+            <div class="col-lg-3 d-none d-lg-block">
+                <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;">
+                    <h6 class="m-0">Kategooriad</h6>
+                    <i class="fa fa-angle-down text-dark"></i>
+                </a>
+                <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
+                    <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+                        <!--
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link" data-toggle="dropdown">Dresses <i class="fa fa-angle-down float-right mt-1"></i></a>
+                            <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
+                                <a href="" class="dropdown-item">Men's Dresses</a>
+                                <a href="" class="dropdown-item">Women's Dresses</a>
+                                <a href="" class="dropdown-item">Baby's Dresses</a>
+                            </div>
+                        </div>
+                        -->
+                        <a href="/kategooria/it?p=1" class="nav-item nav-link">IT</a>
+                        <a href="/kategooria/telefonid?p=1" class="nav-item nav-link">Telefonid</a>
+                        <a href="/kategooria/helitehnika?p=1" class="nav-item nav-link">Helitehnika</a>
+                        <a href="/kategooria/kodumasinad?p=1" class="nav-item nav-link">Kodumasinad</a>
+                        <a href="/kategooria/moobel?p=1" class="nav-item nav-link">Mööbel</a>
+                        <a href="/kategooria/koogitehnika?p=1" class="nav-item nav-link">Köögitehnika</a>
+                        <a href="/kategooria/ilu-ja-tervis?p=1" class="nav-item nav-link">Ilu ja tervis</a>
+                        <a href="/kategooria/meelelahutus?p=1" class="nav-item nav-link">Meelelahutus</a>
+                        <a href="/kategooria/vaba-aeg?p=1" class="nav-item nav-link">Vaba aeg</a>
+                    </div>
+                </nav>
+            </div>
+            <div class="col-lg-9">
+                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+                    <a href="" class="text-decoration-none d-block d-lg-none">
+                        <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1>
+                    </a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto py-0">
+                            <a href="" class="nav-item nav-link active">Home</a>
+                            <!--
+                            <a href="shop.html" class="nav-item nav-link">Shop</a>
+                            <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
+                                <div class="dropdown-menu rounded-0 m-0">
+                                    <a href="cart.html" class="dropdown-item">Shopping Cart</a>
+                                    <a href="checkout.html" class="dropdown-item">Checkout</a>
+                                </div>
+                            </div>
+                            <a href="contact.html" class="nav-item nav-link">Contact</a>
+                            -->
+                        </div>
+                        <div class="col-lg-6 col-6 text-left">
+                            <form action="/otsi">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Otsi tooteid">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text bg-transparent text-primary">
+                                            <i class="fa fa-search"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="navbar-nav ml-auto py-0">
+                            <a href="/konto" class="nav-item nav-link">Konto</a>
+                            <a href="/ostukorv" class="nav-item nav-link">Ostukorv</a>
                         </div>
                     </div>
-                    <div class="col-4">
-                        <div id="wb_PayPalShoppingCart1"  style="display:inline-block;width:32px;height:32px;text-align:center;z-index:3;">
-                            <svg id="PayPalShoppingCart1" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M709 794 C726 777, 746 768, 769 768 C791 768, 811 777, 828 794 C844 811, 852 831, 853 854 C852 877, 844 896, 828 913 C811 930, 791 938, 769 938 C746 938, 726 930, 709 913 C691 896, 683 877, 683 854 C683 831, 691 811, 709 794 Z M85 86 L225 86 L265 170 L897 170 C909 170, 919 174, 927 183 C935 193, 939 202, 939 214 C939 215, 937 222, 933 234 L781 510 C765 539, 740 554, 707 554 L389 554 L351 624 L349 630 C349 637, 352 640, 359 640 L853 640 L853 726 L341 726 C318 726, 298 717, 282 700 C265 683, 257 663, 257 640 C257 627, 260 613, 267 600 L325 494 L171 170 L85 170Z  M282 794 C298 777, 318 768, 341 768 C362 768, 383 777, 401 794 C418 811, 427 831, 427 854 C427 877, 418 896, 401 913 C383 930, 362 938, 341 938 C318 938, 298 930, 282 913 C265 896, 257 877, 257 854 C257 831, 265 811, 282 794"/>
-                            </svg>
-                            <span id="PayPalShoppingCart1-badge">0</span> <!-- Dynamic Checkout count -->
+                </nav>
+                <div id="header-carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" style="height: 410px;">
+                            <img class="img-fluid" src="img/carousel-1.jpg" alt="Image">
+                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                <div class="p-3" style="max-width: 700px;">
+                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
+                                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Fashionable Dress</h3>
+                                    <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item" style="height: 410px;">
+                            <img class="img-fluid" src="img/carousel-2.jpg" alt="Image">
+                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                <div class="p-3" style="max-width: 700px;">
+                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
+                                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Reasonable Price</h3>
+                                    <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
+                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                            <span class="carousel-control-prev-icon mb-n2"></span>
+                        </div>
+                    </a>
+                    <a class="carousel-control-next" href="#header-carousel" data-slide="next">
+                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                            <span class="carousel-control-next-icon mb-n2"></span>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
-        <div id="wb_LayoutGrid2">
-            <div id="LayoutGrid2">
+    </div>
+    <!-- Navbar End -->
+
+    <div th:insert="fragments/__${page}__ :: div"> </div>
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-secondary text-dark mt-5 pt-5">
+        <div class="row px-xl-5 pt-5">
+            <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+                <a href="" class="text-decoration-none">
+                    <h1 class="mb-4 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border border-white px-3 mr-1">E</span>Shopper</h1>
+                </a>
+                <p>Dolore erat dolor sit lorem vero amet. Sed sit lorem magna, ipsum no sit erat lorem et magna ipsum dolore amet erat.</p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
+            </div>
+            <div class="col-lg-8 col-md-12">
                 <div class="row">
-                    <div class="col-1">
-                        <form method="get" action = '/kategooria'>
-                            <button type="submit">Kategooria</button>
+                    <div class="col-md-4 mb-5">
+                        <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
+                        <div class="d-flex flex-column justify-content-start">
+                            <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
+                            <a class="text-dark mb-2" href="detail.html"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
+                            <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+                            <a class="text-dark mb-2" href="checkout.html"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
+                            <a class="text-dark" href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-5">
+                        <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
+                        <div class="d-flex flex-column justify-content-start">
+                            <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
+                            <a class="text-dark mb-2" href="detail.html"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
+                            <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+                            <a class="text-dark mb-2" href="checkout.html"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
+                            <a class="text-dark" href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-5">
+                        <h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
+                        <form action="">
+                            <div class="form-group">
+                                <input type="text" class="form-control border-0 py-4" placeholder="Your Name" required="required" />
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control border-0 py-4" placeholder="Your Email"
+                                    required="required" />
+                            </div>
+                            <div>
+                                <button class="btn btn-primary btn-block border-0 py-3" type="submit">Subscribe Now</button>
+                            </div>
                         </form>
                     </div>
-                    <div class="col-2">
-                        <input type="submit" id="Button2" name="" value="Submit" href="/kategooria2" style="display:inline-block;width:96px;height:25px;z-index:5;">
-                    </div>
-                    <div class="col-3">
-                        <input type="submit" id="Button3" name="" value="Submit" href="/kategooria3" style="display:inline-block;width:96px;height:25px;z-index:6;">
-                    </div>
-                    <div class="col-4">
-                        <input type="submit" id="Button4" name="" value="Submit" href="/kategooria4" style="display:inline-block;width:96px;height:25px;z-index:7;">
-                    </div>
-                    <div class="col-5">
-                        <input type="submit" id="Button5" name="" value="Submit" href="/kategooria5" style="display:inline-block;width:96px;height:25px;z-index:8;">
-                    </div>
-                    <div class="col-6">
-                        <input type="submit" id="Button6" name="" value="Submit" href="/kategooria6" style="display:inline-block;width:96px;height:25px;z-index:9;">
-                    </div>
                 </div>
             </div>
         </div>
-    </header>
-    <!-- end header -->
-    <div th:insert="fragments/__${page}__ :: div"> </div>
-    <footer>
-        <div id="wb_serviceLayoutGrid">
-            <div id="serviceLayoutGrid">
-                <div class="row">
-                    <div class="col-1">
-                        <div id="wb_serviceCard1" style="display:inline-block;width:212px;height:59px;z-index:30;" class="card">
-                            <div id="serviceCard1-card-body">
-                                <div id="serviceCard1-card-item0"><i class="fa fa-truck"></i></div>
-                                <div id="serviceCard1-card-item1">Free shipping</div>
-                                <div id="serviceCard1-card-item2">Lorem ipsum dolor</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div id="wb_serviceCard2" style="display:inline-block;width:203px;height:59px;z-index:31;" class="card">
-                            <div id="serviceCard2-card-body">
-                                <div id="serviceCard2-card-item0"><i class="fa fa-phone"></i></div>
-                                <div id="serviceCard2-card-item1">Contact us 24/7</div>
-                                <div id="serviceCard2-card-item2">Lorem ipsum dolor</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div id="wb_serviceCard3" style="display:inline-block;width:209px;height:59px;z-index:32;" class="card">
-                            <div id="serviceCard3-card-body">
-                                <div id="serviceCard3-card-item0"><i class="fa fa-sign-out"></i></div>
-                                <div id="serviceCard3-card-item1">30 Days Return</div>
-                                <div id="serviceCard3-card-item2">Lorem ipsum dolor</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div id="wb_serviceCard4" style="display:inline-block;width:209px;height:59px;z-index:33;" class="card">
-                            <div id="serviceCard4-card-body">
-                                <div id="serviceCard4-card-item0"><i class="fa fa-lock"></i></div>
-                                <div id="serviceCard4-card-item1">Secure Payments</div>
-                                <div id="serviceCard4-card-item2">Lorem ipsum dolor</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="row border-top border-light mx-xl-5 py-4">
+            <div class="col-md-6 px-xl-0">
+                <p class="mb-md-0 text-center text-md-left text-dark">
+                    &copy; <a class="text-dark font-weight-semi-bold" href="#">Your Site Name</a>. All Rights Reserved. Designed
+                    by
+                    <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com">HTML Codex</a><br>
+                    Distributed By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                </p>
+            </div>
+            <div class="col-md-6 px-xl-0 text-center text-md-right">
+                <img class="img-fluid" src="img/payments.png" alt="">
             </div>
         </div>
-        <div id="wb_links">
-            <div id="links-overlay"></div>
-            <div id="links">
-                <div class="row">
-                    <div class="col-1">
-                        <div id="wb_linksText1">
-                            <span style="color:#FFFFFF;"><strong>SHOPPER</strong></span>
-                        </div>
-                        <div id="wb_contactAddress">
-                            <p>#28, 3nd floor, WYSIWYG Plaza<br/>Web City, Builder, WB 1969</p>
-                            <p>Phone: 100 121 34567</p>
-                            <p>Fax: 100 121 34568</p>
-                            <p>Email: info@wysiwygmail.com</p>
-                        </div>
-                        <div id="wb_contactIcon1" style="display:inline-block;width:27px;height:27px;text-align:center;z-index:46;">
-                            <a href="./wb17_shopper.html"><div id="contactIcon1"><i class="fa fa-linkedin-square"></i></div></a>
-                        </div>
-                        <div id="wb_contactIcon2" style="display:inline-block;width:27px;height:27px;text-align:center;z-index:47;">
-                            <a href="./wb17_shopper.html"><div id="contactIcon2"><i class="fa fa-facebook-official"></i></div></a>
-                        </div>
-                        <div id="wb_contactIcon3" style="display:inline-block;width:27px;height:27px;text-align:center;z-index:48;">
-                            <a href="./wb17_shopper.html"><div id="contactIcon3"><i class="fa fa-twitter"></i></div></a>
-                        </div>
-                        <div id="wb_contactIcon4" style="display:inline-block;width:27px;height:27px;text-align:center;z-index:49;">
-                            <a href="./wb17_shopper.html"><div id="contactIcon4"><i class="fa fa-youtube-play"></i></div></a>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div id="wb_linksText2">
-                            <span style="color:#FFFFFF;"><strong>COMPANY</strong></span>
-                        </div>
-                        <div id="wb_linksMenu2" style="display:inline-block;width:100%;z-index:51;">
-                            <ul id="linksMenu2" role="menubar" class="nav">
-                                <li role="menuitem" class="nav-item firstmain"><a class="nav-link" href="" target="_self">What&nbsp;We&nbsp;Do</a>
-                                </li>
-                                <li role="menuitem" class="nav-item"><a class="nav-link" href="" target="_self">Services</a>
-                                </li>
-                                <li role="menuitem" class="nav-item"><a class="nav-link" href="https://www.wysiwygwebbuilder.com/forum/index.php" target="_self">Forum</a>
-                                </li>
-                                <li role="menuitem" class="nav-item"><a class="nav-link" href="#" target="_self">Support</a>
-                                </li>
-                                <li role="menuitem" class="nav-item"><a class="nav-link" href="#" target="_self">Privacy&nbsp;Policy</a>
-                                </li>
-                            </ul>
+    </div>
+    <!-- Footer End -->
 
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div id="wb_linksText3">
-                            <span style="color:#FFFFFF;"><strong>SUPPORT</strong></span>
-                        </div>
-                        <div id="wb_linksMenu1" style="display:inline-block;width:100%;z-index:53;">
-                            <ul id="linksMenu1" role="menubar" class="nav">
-                                <li role="menuitem" class="nav-item firstmain"><a class="nav-link" href="" target="_self">Help&nbsp;&amp;&nbsp;Contact&nbsp;Us</a>
-                                </li>
-                                <li role="menuitem" class="nav-item"><a class="nav-link" href="" target="_self">Returns&nbsp;&amp;&nbsp;Refunds</a>
-                                </li>
-                                <li role="menuitem" class="nav-item"><a class="nav-link" href="" target="_self">Online&nbsp;Stores</a>
-                                </li>
-                                <li role="menuitem" class="nav-item"><a class="nav-link" href="" target="_self">Terms&nbsp;&amp;&nbsp;Conditions</a>
-                                </li>
-                            </ul>
 
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div id="wb_linksText4">
-                            <span style="color:#FFFFFF;"><strong>STAY UP TO DATE</strong></span>
-                        </div>
-                        <div id="wb_linksText5">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. </p>
-                        </div>
-                        <input type="text" id="contactEmail" style="display:block;width: 100%;height:38px;z-index:56;" name="email" value="" spellcheck="false" placeholder="Email">
-                        <input type="submit" id="contactButton" name="" value="Sign Up" style="display:inline-block;width:97px;height:34px;z-index:57;">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-</div>
-<a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
-<script type="text/javascript" th:src="@{/js/jquery-1.12.4.min.js}"></script>
-<script type="text/javascript" th:src="@{/js/util.min.js}"></script>
-<script type="text/javascript" th:src="@{/js/carousel.min.js}"></script>
-<script type="text/javascript" th:src="@{/js/jquery-ui.min.js}"></script>
-<script type="text/javascript" th:src="@{/js/modal.min.js}"></script>
-<script type="text/javascript" th:src="@{/js/searchindex.js}"></script>
-<script type="text/javascript" th:src="@{/js/wb.sitesearch.min.js}"></script>
-<script type="text/javascript" th:src="@{js/minicart.min.js}"></script>
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="mail/jqBootstrapValidation.min.js"></script>
+    <script src="mail/contact.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
 </body>
+
 </html>

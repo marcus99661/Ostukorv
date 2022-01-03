@@ -8,7 +8,7 @@
     <body>
         <section class="start">
             <h1>Toote muutmine</h1>
-            <img alt="sample" th:src="*{'data:image/png;base64,'+image}"/>
+            <img alt="pilt" th:src="*{'data:image/png;base64,'+image}"/>
             <form method="POST" action="/admin/toodeUpdate" enctype="multipart/form-data">
                 <input type="file" name="file" style="display: block; margin-left: auto; margin-right: auto;"/>
                 <h1>Toote nimi</h1>

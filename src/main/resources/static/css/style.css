@@ -7269,6 +7269,10 @@ button.bg-dark:focus {
   width: 100% !important;
 }
 
+.w-uus-100 {
+  width: 100px !important;
+}
+
 .w-auto {
   width: auto !important;
 }
