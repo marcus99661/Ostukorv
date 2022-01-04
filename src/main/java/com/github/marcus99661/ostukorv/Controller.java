@@ -194,7 +194,7 @@ public class Controller {
 
     @GetMapping("/konto")
     public String konto(HttpServletResponse response, HttpServletRequest request, Model model) throws IOException {
-        String token = getCookie(request.getCookies(), "session");
+        String token = getCookieString(request.getCookies(), "session");
         if (token.isBlank()) {
             response.sendRedirect("/login");
             return null;
@@ -256,18 +256,41 @@ public class Controller {
         model.addAttribute("price", toode.getPrice());
         model.addAttribute("desc", toode.getDesc());
         model.addAttribute("thumbnail", toode.getThumbnail());
-        //model.addAttribute("pics", pildid);
+        model.addAttribute("pics", pildid);
         return "main";
     }
 
-    @GetMapping("lisaToode")
-    public void lisaToode(HttpServletResponse response, HttpServletRequest request, @RequestParam String kood) {
-        String tooted = getCookie(request.getCookies(), "tooted");
-        if (tooted.isBlank()) {
-            tooted += "1=" + kood;
-        } else {
-            tooted += ",1=" + kood;
+    @PostMapping("lisaToode")
+    public void lisaToode(HttpServletResponse response, HttpServletRequest request, @RequestParam String kood, @RequestParam(required = false) String kogus) {
+        // TODO: kontrollida, et kogus või kokku oleks alla Integer.MAX_VALUE
+        if (Objects.isNull(kogus)) {
+            kogus = "1";
         }
+        String tooted = getCookieString(request.getCookies(), "tooted");
+        if (tooted.isBlank()) {
+            tooted += kogus + "=" + kood;
+        } else {
+            List<String> tooteList = List.of(tooted.split("\\|"));
+            List<String> uusTooteList = new ArrayList<>();
+            boolean leitud = false;
+            for (String i : tooteList) {
+                String listiKood = i.split("=")[1];
+                if (listiKood.equals(kood)) {
+                    String kokku = String.valueOf(Integer.valueOf(i.split("=")[0]) + Integer.valueOf(kogus));
+                    uusTooteList.add(kokku + "=" + kood);
+                    leitud = true;
+                } else {
+                    uusTooteList.add(i);
+                }
+            }
+            if (!leitud) {
+                uusTooteList.add(kogus + "=" + kood);
+            }
+
+            // List -> 1=ABC3|2=ABC7
+            tooted = String.join("|", uusTooteList);
+        }
+        System.out.println(tooted);
         response.addCookie(new Cookie("tooted", tooted));
     }
 
@@ -283,7 +306,7 @@ public class Controller {
         return "main";
     }
 
-    public static String getCookie(Cookie[] cookies, String name) {
+    public static String getCookieString(Cookie[] cookies, String name) {
         String token = "";
         if (Objects.isNull(cookies)) {
             return token;
@@ -295,6 +318,19 @@ public class Controller {
             }
         }
         return token;
+    }
+
+    public static Cookie getCookie(Cookie[] cookies, String name) {
+        String token = "";
+        if (Objects.isNull(cookies)) {
+            return new Cookie(name, "");
+        }
+        for (Cookie i : cookies) {
+            if (i.getName().equalsIgnoreCase(name)) {
+                return i;
+            }
+        }
+        return null;
     }
 
     public static boolean validatetoken(String token) {

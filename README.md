@@ -51,7 +51,7 @@ Konto - "/konto"
  - Toote pilt
  - Toote hind
  - Toote kirjeldus
- - 
+ - pluss ja miinus nupp ei tööta
 
 ## Kategooria leht
 
