@@ -47,6 +47,12 @@ public class Toode {
     // public ArrayList<Allahindlus> discounts;
 
 
+    /**
+     * Ostukorvis kasutuseks
+     */
+    public String tooteKogus;
+    public String koguseHind;
+
     public Toode() {}
 
     public Toode(String kood, String name, String desc, double price, String amount, ArrayList<String> image, String category) {
@@ -93,6 +99,12 @@ public class Toode {
     public String getThumbnail() {
         return thumbnail;
     }
+    public String getTooteKogus() {
+        return tooteKogus;
+    }
+    public String getKoguseHind() {
+        return koguseHind;
+    }
 
     public void setId(String id) {
         this.id = id;
@@ -120,5 +132,11 @@ public class Toode {
     }
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
+    }
+    public void setTooteKogus(String tooteKogus) {
+        this.tooteKogus = tooteKogus;
+    }
+    public void setKoguseHind(String koguseHind) {
+        this.koguseHind = koguseHind;
     }
 }

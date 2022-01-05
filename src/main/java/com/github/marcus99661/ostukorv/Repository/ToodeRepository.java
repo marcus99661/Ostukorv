@@ -1,5 +1,6 @@
-package com.github.marcus99661.ostukorv;
+package com.github.marcus99661.ostukorv.Repository;
 
+import com.github.marcus99661.ostukorv.Toode;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 

@@ -48,15 +48,14 @@ Konto - "/konto"
 ## Toote leht
 
  - Asub - "/toode/"
- - Toote pilt
- - Toote hind
- - Toote kirjeldus
  - pluss ja miinus nupp ei tööta
+ - Toode mis on otsas "Lisa korvi" nupp ei tööta
 
 ## Kategooria leht
 
  - Asub - "/kategooria/it", "/kategooria/vaba-aeg"
  - Teha korda page numbrid
+ - Toode mis on otsas "Lisa korvi" nupp ei tööta
 
 ## Otsingu funktsioon
 

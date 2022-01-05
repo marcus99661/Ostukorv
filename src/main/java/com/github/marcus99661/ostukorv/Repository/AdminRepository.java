@@ -1,5 +1,6 @@
-package com.github.marcus99661.ostukorv;
+package com.github.marcus99661.ostukorv.Repository;
 
+import com.github.marcus99661.ostukorv.Admin;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

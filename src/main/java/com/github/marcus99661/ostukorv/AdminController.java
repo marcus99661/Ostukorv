@@ -5,7 +5,9 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import org.bson.types.Binary;
+import com.github.marcus99661.ostukorv.Repository.AdminRepository;
+import com.github.marcus99661.ostukorv.Repository.PiltRepository;
+import com.github.marcus99661.ostukorv.Repository.ToodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.ui.Model;
@@ -20,8 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.util.*;
-
-import static ch.qos.logback.core.encoder.ByteArrayUtil.hexStringToByteArray;
 
 @org.springframework.stereotype.Controller
 @RequestMapping("/admin")

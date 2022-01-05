@@ -5,7 +5,9 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import org.bson.Document;
+import com.github.marcus99661.ostukorv.Repository.KasutajaRepository;
+import com.github.marcus99661.ostukorv.Repository.PiltRepository;
+import com.github.marcus99661.ostukorv.Repository.ToodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.ui.Model;
@@ -15,6 +17,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -295,9 +299,52 @@ public class Controller {
     }
 
     @GetMapping("/ostukorv")
-    public String ostukorv(Model model) {
+    public String ostukorv(Model model, HttpServletRequest request) {
+        // TODO: Lisada nupp millega saab toodet eemaldada
         model.addAttribute("page", "ostukorv");
+        String tooteCookie = getCookieString(request.getCookies(), "tooted");
+        System.out.println(tooteCookie);
+
+        if (tooteCookie.isBlank()) {
+            // Ei ole ühtegi toodet ostukorvis
+        }
+        List<String> tooteKoodiList = List.of(tooteCookie.split("\\|"));
+        List<Toode> tooted = new ArrayList<>();
+
+         // TODO: kontrollib kas tooted on ka saadaval
+
+        for (String i : tooteKoodiList) {
+            // 2=ABC5
+            String kogus = i.split("=")[0];
+            String kood = i.split("=")[1];
+            try {
+                Toode temp = toodeRepository.findByKood(kood).get(0);
+                Pilt a = pildiTeenus.getPhoto(temp.getImage().get(0));
+                temp.setThumbnail(Base64.getEncoder().encodeToString(a.getImage().getData()));
+                temp.setName(" " + temp.getName());
+                temp.setTooteKogus(kogus);
+                temp.setKoguseHind(String.valueOf(Integer.parseInt(kogus) * temp.getPrice()));
+                tooted.add(temp);
+            } catch (Exception e) {
+                System.out.println("TOOTE KOODI EI OLE ANDMEBAASIS");
+            }
+        }
+        System.out.println("Toote kogused ostukorvis: " + tooted.size());
+        model.addAttribute("tooted", tooted);
+        double totalPrice = 0d;
+        for (Toode i : tooted) {
+            totalPrice += Double.parseDouble(i.getKoguseHind());
+        }
+        model.addAttribute("subtotal", String.valueOf(round(totalPrice, 2)));
+        model.addAttribute("total", String.valueOf(round(totalPrice+10d, 2)));
+
         return "main";
+    }
+
+    @PostMapping("/ostukorvTooteEemaldamine")
+    public void ostukorvTooteEemaldamine(@RequestParam String kood) {
+        // TODO: Võtab toodete Cookiest toote vähemaks koodi järgi. Kui toode kogus == 0 siis eemaldab täielikult
+        List<Toode> uusTooteList = new ArrayList<>();
     }
 
     @GetMapping("/tellimus")
@@ -331,6 +378,14 @@ public class Controller {
             }
         }
         return null;
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
     public static boolean validatetoken(String token) {
