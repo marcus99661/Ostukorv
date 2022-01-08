@@ -165,6 +165,8 @@
                           <div class="card-footer d-flex justify-content-between bg-light border">
                             <a th:attr="onclick='window.location.href=\'/toode?kood=' + ${toode.kood} + '\''" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
                               <form action="/lisaToode" method="post">
+                                  <textarea name="redirect" th:text="'/kategooria/' + ${redirect}" style="display:none;"></textarea>
+                                  <textarea name="p" th:text="${p}" style="display:none;"></textarea>
                                   <button name="kood" th:value="${toode.kood}" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</button>
                               </form>
 

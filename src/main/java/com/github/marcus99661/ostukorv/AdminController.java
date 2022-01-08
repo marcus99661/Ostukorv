@@ -247,6 +247,16 @@ public class AdminController {
     }
 
 
+    @GetMapping("/tellimused")
+    public void tellimused() {
+
+    }
+
+    @GetMapping("/kasutajatugi")
+    public void kasutajatugi() {
+
+    }
+
 
     public static String getToken(Cookie[] cookies) {
         String token = "";

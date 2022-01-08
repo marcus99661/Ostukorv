@@ -8,67 +8,58 @@
                 <table class="table table-bordered text-center mb-0">
                     <thead class="bg-secondary text-dark">
                         <tr>
-                            <th>Products</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Total</th>
-                            <th>Remove</th>
+                            <th>Tooted</th>
+                            <th>Hind</th>
+                            <th>Kogus</th>
+                            <th>Kokku</th>
+                            <th>Eemalda</th>
                         </tr>
                     </thead>
-                    <tbody class="align-middle">
+                    <tbody class="align-middle" th:if="${not #lists.isEmpty(tooted)}">
                         <tr th:each="toode : ${tooted}">
-                            <td class="align-middle"><img th:src="*{'data:image/png;base64,'+toode.thumbnail}" alt="" style="width: 50px;" th:text="${toode.name}" > </td>
+                            <td class="align-middle"><img th:src="*{'data:image/png;base64,'+toode.thumbnail}" alt="" style="width: 50px;" > <a th:href="'/toode?kood=' + ${toode.kood}" style="margin-left: 5px;" th:text="${toode.name}"></a> </td>
                             <td class="align-middle" th:text="'€' + ${toode.price}"></td>
                             <td class="align-middle">
                                 <div class="input-group quantity mx-auto" style="width: 100px;">
                                     <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-minus" >
-                                            <i class="fa fa-minus"></i>
-                                        </button>
+                                        <!-- lahutab toote -->
+                                        <form action="/eemaldaToode" method="post">
+                                            <textarea name="redirect" th:text="'/ostukorv'" style="display:none;"></textarea>
+                                            <button name="kood" th:value="${toode.kood}" class="btn btn-sm btn-primary btn-minus" >
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                     <input type="text" class="form-control form-control-sm bg-secondary text-center" th:value="${toode.tooteKogus}">
                                     <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-plus">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
+                                        <!-- liidab toote -->
+                                        <form action="/lisaToode" method="post">
+                                            <textarea name="redirect" th:text="'/ostukorv'" style="display:none;"></textarea>
+                                            <button name="kood" th:value="${toode.kood}" class="btn btn-sm btn-primary btn-plus">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </td>
                             <td class="align-middle" th:text="'€' + ${toode.koguseHind}" ></td>
-                            <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
-                        </tr>
-                    <!--
-                        <tr>
-                            <td class="align-middle"><img src="img/product-1.jpg" alt="" style="width: 50px;"> Colorful Stylish Shirt</td>
-                            <td class="align-middle">$150</td>
                             <td class="align-middle">
-                                <div class="input-group quantity mx-auto" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-minus" >
-                                        <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" class="form-control form-control-sm bg-secondary text-center" value="1">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-plus">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
+                                <form action="/ostukorvTooteEemaldamine" method="post">
+                                    <button name="kood" th:value="${toode.kood}" class="btn btn-sm btn-primary">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </form>
                             </td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
                         </tr>
-                        -->
                     </tbody>
                 </table>
             </div>
             <div class="col-lg-4">
                 <form class="mb-5" action="">
                     <div class="input-group">
-                        <input type="text" class="form-control p-4" placeholder="Coupon Code">
+                        <input type="text" class="form-control p-4" placeholder="Lisa sooduskupong">
                         <div class="input-group-append">
-                            <button class="btn btn-primary">Apply Coupon</button>
+                            <button class="btn btn-primary">Sooduskupong</button>
                         </div>
                     </div>
                 </form>
@@ -91,7 +82,7 @@
                             <h5 class="font-weight-bold">Kokku</h5>
                             <h5 class="font-weight-bold" th:text="'€' + ${total}"></h5>
                         </div>
-                        <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
+                        <a th:href="'/tellimus'" class="btn btn-block btn-primary my-3 py-3">Vormista tellimus</a>
                     </div>
                 </div>
             </div>

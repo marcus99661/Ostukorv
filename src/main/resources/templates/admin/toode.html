@@ -19,8 +19,8 @@
                 <textarea name="amount" type="number" class="price" style="width:10%; height: 40px;" th:text="${amount}"></textarea>
                 <h1>Toote kirjeldus</h1>
                 <textarea name="desc" class="desc" style="width:50%; height: 400px;" th:text="${desc}"></textarea>
-                <label for="category">Toote kategooria:</label>
-                <select name="category" id="category">
+                <label for="category" style="text-align: center;display: block;margin-left: auto;margin-right: auto;">Toote kategooria:</label>
+                <select name="category" id="category" style="display: block; margin-left: auto; margin-right: auto;">
                     <option value="it" th:selected="${category} == it ? true : false">IT</option>
                     <option value="telefonid" th:selected="${category} == telefonid ? true : false">Telefonid</option>
                     <option value="helitehnika" th:selected="${category} == helitehnika ? true : false">Helitehnika</option>

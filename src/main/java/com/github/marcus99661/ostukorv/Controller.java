@@ -10,6 +10,8 @@ import com.github.marcus99661.ostukorv.Repository.PiltRepository;
 import com.github.marcus99661.ostukorv.Repository.ToodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -224,7 +226,15 @@ public class Controller {
             p = "1";
         }
         model.addAttribute("page", "kategooria");
-        // Kontrollib kas kategooria on listis
+        // TODO: Kontrollib kas kategooria on listis
+
+        // TODO: Kontrollib kas redirect on lubatud
+        model.addAttribute("redirect", kategooria);
+        if (Objects.isNull(p)) {
+            model.addAttribute("p", "1");
+        } else {
+            model.addAttribute("p", p);
+        }
 
         // Võtab kõik tooted andmebaasist mille kategooria on antud
         List<Toode> kategooriaTooted = toodeRepository.findByCategory(kategooria);
@@ -265,7 +275,8 @@ public class Controller {
     }
 
     @PostMapping("lisaToode")
-    public void lisaToode(HttpServletResponse response, HttpServletRequest request, @RequestParam String kood, @RequestParam(required = false) String kogus) {
+    public void lisaToode(HttpServletResponse response, HttpServletRequest request, @RequestParam String kood, @RequestParam(required = false) String kogus, @RequestParam(required = false) String redirect,@RequestParam(required = false) String p) throws IOException {
+        System.out.println(redirect);
         // TODO: kontrollida, et kogus või kokku oleks alla Integer.MAX_VALUE
         if (Objects.isNull(kogus)) {
             kogus = "1";
@@ -296,6 +307,54 @@ public class Controller {
         }
         System.out.println(tooted);
         response.addCookie(new Cookie("tooted", tooted));
+        if (!Objects.isNull(redirect)) {
+
+            if (redirect.equalsIgnoreCase("/ostukorv")) {
+                response.sendRedirect(redirect);
+            } else if (Objects.isNull(p)) {
+                response.sendRedirect(redirect + "?p=1");
+            } else {
+                response.sendRedirect(redirect + "?p=" + p);
+            }
+        } else {
+            // Kui redirect on tühi siis viskab errori
+            response.sendRedirect("error");
+        }
+    }
+
+    @PostMapping("eemaldaToode")
+    public void eemaldaToode(HttpServletResponse response, HttpServletRequest request, @RequestParam String kood, @RequestParam(required = false) String kogus, @RequestParam(required = false) String redirect) throws IOException {
+        // TODO: Võtab toodete Cookiest toote vähemaks koodi järgi. Kui toode kogus == 0 siis eemaldab täielikult
+        System.out.println("Lahutab toote: " + kood);
+
+        if (Objects.isNull(kogus)) {
+            kogus = "1";
+        }
+
+        String cookieString = getCookieString(request.getCookies(), "tooted");
+        if (cookieString.isBlank()) {
+            System.out.println("Toodet ei ole cookie all");
+            response.sendRedirect("/error");
+        } else {
+            List<String> tooteList = List.of(cookieString.split("\\|"));
+            List<String> uusTooteList = new ArrayList<>();
+            for (String i : tooteList) {
+                String tooteKogus = i.split("=")[0];
+                String listiKood = i.split("=")[1];
+                if (listiKood.equals(kood)) {
+                    String kokku = String.valueOf(Integer.valueOf(tooteKogus) - Integer.valueOf(kogus));
+                    if (!(Integer.parseInt(kokku) <= 0)) {
+                        uusTooteList.add(kokku + "=" + kood);
+                    }
+                } else {
+                    uusTooteList.add(i);
+                }
+            }
+            String tooted = String.join("|", uusTooteList);
+            response.addCookie(new Cookie("tooted", tooted));
+        }
+        System.out.println(request.getHeader("Referer"));
+        response.sendRedirect(redirect);
     }
 
     @GetMapping("/ostukorv")
@@ -314,7 +373,6 @@ public class Controller {
          // TODO: kontrollib kas tooted on ka saadaval
 
         for (String i : tooteKoodiList) {
-            // 2=ABC5
             String kogus = i.split("=")[0];
             String kood = i.split("=")[1];
             try {
@@ -323,13 +381,12 @@ public class Controller {
                 temp.setThumbnail(Base64.getEncoder().encodeToString(a.getImage().getData()));
                 temp.setName(" " + temp.getName());
                 temp.setTooteKogus(kogus);
-                temp.setKoguseHind(String.valueOf(Integer.parseInt(kogus) * temp.getPrice()));
+                temp.setKoguseHind(String.valueOf(round(Integer.parseInt(kogus) * temp.getPrice(), 2)));
                 tooted.add(temp);
             } catch (Exception e) {
                 System.out.println("TOOTE KOODI EI OLE ANDMEBAASIS");
             }
         }
-        System.out.println("Toote kogused ostukorvis: " + tooted.size());
         model.addAttribute("tooted", tooted);
         double totalPrice = 0d;
         for (Toode i : tooted) {
@@ -342,15 +399,39 @@ public class Controller {
     }
 
     @PostMapping("/ostukorvTooteEemaldamine")
-    public void ostukorvTooteEemaldamine(@RequestParam String kood) {
-        // TODO: Võtab toodete Cookiest toote vähemaks koodi järgi. Kui toode kogus == 0 siis eemaldab täielikult
-        List<Toode> uusTooteList = new ArrayList<>();
+    public void ostukorvTooteEemaldamine(HttpServletResponse response, HttpServletRequest request, @RequestParam String kood) throws IOException {
+        // TODO: Eemaldab tootekoodi täielikult toodete Cookiest
+        System.out.println("Eemaldab toote: " + kood);
+        String cookieString = getCookieString(request.getCookies(), "tooted");
+        if (cookieString.isBlank()) {
+            System.out.println("Toodet ei ole cookie all");
+            response.sendRedirect("/error");
+        } else {
+            List<String> tooteList = List.of(cookieString.split("\\|"));
+            List<String> uusTooteList = new ArrayList<>();
+            for (String i : tooteList) {
+                String tooteKogus = i.split("=")[0];
+                String listiKood = i.split("=")[1];
+                if (!listiKood.equals(kood)) {
+                    uusTooteList.add(i);
+                }
+            }
+            String tooted = String.join("|", uusTooteList);
+            response.addCookie(new Cookie("tooted", tooted));
+        }
+        response.sendRedirect("/ostukorv");
     }
 
     @GetMapping("/tellimus")
     public String tellimus(Model model) {
         model.addAttribute("page", "tellimus");
+        // TODO: Kontrollib kas tooded on laos olemas, kui ei siis redirect ostukorvi erroriga
         return "main";
+    }
+
+    @PostMapping("/tellimuseVormistamine")
+    public void tellimuseVormistamine(HttpServletResponse response, HttpServletRequest request) {
+
     }
 
     public static String getCookieString(Cookie[] cookies, String name) {

@@ -35,10 +35,10 @@
                         <div class="col-md-6 form-group">
                             <label>Country</label>
                             <select class="custom-select">
-                                <option selected>United States</option>
-                                <option>Afghanistan</option>
-                                <option>Albania</option>
-                                <option>Algeria</option>
+                                <option selected>Eesti</option>
+                                <option>Soome</option>
+                                <option>Läti</option>
+                                <option>Leedu</option>
                             </select>
                         </div>
                         <div class="col-md-6 form-group">
@@ -52,12 +52,6 @@
                         <div class="col-md-6 form-group">
                             <label>ZIP Code</label>
                             <input class="form-control" type="text" placeholder="123">
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="newaccount">
-                                <label class="custom-control-label" for="newaccount">Create an account</label>
-                            </div>
                         </div>
                         <div class="col-md-12 form-group">
                             <div class="custom-control custom-checkbox">
@@ -118,6 +112,7 @@
                     </div>
                 </div>
             </div>
+            <!-- Tooted -->
             <div class="col-lg-4">
                 <div class="card border-secondary mb-5">
                     <div class="card-header bg-secondary border-0">
@@ -167,19 +162,25 @@
                         </div>
                         <div class="form-group">
                             <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" name="payment" id="directcheck">
-                                <label class="custom-control-label" for="directcheck">Direct Check</label>
+                                <input type="radio" class="custom-control-input" name="payment" id="skrill">
+                                <label class="custom-control-label" for="skrill">Skrill</label>
                             </div>
                         </div>
                         <div class="">
                             <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" name="payment" id="banktransfer">
-                                <label class="custom-control-label" for="banktransfer">Bank Transfer</label>
+                                <input type="radio" class="custom-control-input" name="payment" id="swedbank">
+                                <label class="custom-control-label" for="swedbank">Swedbank</label>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" name="payment" id="lhv">
+                                <label class="custom-control-label" for="lhv">LHV</label>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
-                        <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Place Order</button>
+                        <button th:href="'/tellimuseVormistamine'" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Place Order</button>
                     </div>
                 </div>
             </div>
