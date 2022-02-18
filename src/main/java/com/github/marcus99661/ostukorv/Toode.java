@@ -20,30 +20,22 @@ public class Toode {
     public double price;
     public String amount;
 
-    /**
-     * pilt, BASE64 encoded String, esimene pilt image listist
-     */
+
+    //pilt, BASE64 encoded String, esimene pilt image listist
     public String thumbnail;
 
-    /**
-     * ArrayList täidetud Image hashidega (service.findByHash)
-     */
+    //ArrayList täidetud Image hashidega (service.findByHash)
     public ArrayList<String> image;
     public String category;
 
-    /**
-     * Toote tägid, mille järgi saab otsida ja soovitada
-     */
+    //Toote tägid, mille järgi saab otsida ja soovitada
     // public ArrayList<String> tags;
 
-    /**
-     * List reviewdest (kasutaja, hinnang, notes, LocalDateTime kell)
-     */
+    //List reviewdest (kasutaja, hinnang, sisu, LocalDateTime kell)
     // public ArrayList<Review> reviews;
 
-    /**
-     * List allahindlustega (algus, lõpp)
-     */
+
+    //List allahindlustega (algus, lõpp, protsent)
     // public ArrayList<Allahindlus> discounts;
 
 

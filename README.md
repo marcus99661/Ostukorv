@@ -100,6 +100,7 @@ Teha sammuti fragmendiga
 - ~~igal real on eraldi toode~~
 - ~~iga toote juures on nimi, hind(euro), kogus, muutmise nupp, kustutamise nupp~~
     - alaosa kus on saab toote juurde lisada ajastatud allahindlus
+- Kui tootekoodil on /n järel siis ei saa toodet muuta ega eemaldada
 - Kui toode on otsas siis on hall
 
 ## Toodete muutmis leht

@@ -182,11 +182,11 @@ public class AdminController {
          * Pildi nimi ei tohi olla "default"
          * price ei tohi sisaldada tähti ega koma
          * VAHEPEAL MUUDAB DEFAULT PILDI PEALE LAMPI
+         * kood ei tohi sisaldada Newline
          */
         System.out.println(multipart.getBytes().length);
 
         // Default pildi hash
-        //String pildiHash = "8d0f20006bf035706e38f835a6f912d16aad25a14003c3221d4d633ba77a7855";
         String pildiHash = MainApplication.defaultHash;
 
         if (multipart.getBytes().length > 0) {
