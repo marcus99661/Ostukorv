@@ -59,6 +59,7 @@ public class MainApplication implements CommandLineRunner {
 
 			piltRepository.insert(asd);
 		} catch (Exception e) {
+			System.out.println("SIIN ON EXCEPTION");
 			System.out.println(e);
 		}
 

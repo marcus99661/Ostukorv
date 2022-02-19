@@ -65,16 +65,16 @@
                 </form>
                 <div class="card border-secondary mb-5">
                     <div class="card-header bg-secondary border-0">
-                        <h4 class="font-weight-semi-bold m-0">Cart Summary</h4>
+                        <h4 class="font-weight-semi-bold m-0">Ostukorv</h4>
                     </div>
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-3 pt-1">
-                            <h6 class="font-weight-medium">Subtotal</h6>
+                            <h6 class="font-weight-medium">Toodete hind</h6>
                             <h6 class="font-weight-medium" th:text="'€' + ${subtotal}"></h6>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h6 class="font-weight-medium">Transport</h6>
-                            <h6 class="font-weight-medium">€10.00</h6>
+                            <h6 class="font-weight-medium" th:text="'€' + ${transport}" ></h6>
                         </div>
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
@@ -82,7 +82,12 @@
                             <h5 class="font-weight-bold">Kokku</h5>
                             <h5 class="font-weight-bold" th:text="'€' + ${total}"></h5>
                         </div>
-                        <a th:href="'/tellimus'" class="btn btn-block btn-primary my-3 py-3">Vormista tellimus</a>
+                        <div th:if="${not #lists.isEmpty(tooted)}">
+                            <a th:href="'/tellimus'" class="btn btn-block btn-primary my-3 py-3">Vormista tellimus</a>
+                        </div>
+                        <div th:if="${#lists.isEmpty(tooted)}">
+                            <a th:href="'/tellimus'" class="btn btn-block btn-primary my-3 py-3" style="background-color: #A6AFA4; border-color: #A6AFA4; pointer-events: none;">Vormista tellimus</a>
+                        </div>
                     </div>
                 </div>
             </div>

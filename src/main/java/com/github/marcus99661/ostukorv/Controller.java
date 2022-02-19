@@ -266,6 +266,7 @@ public class Controller {
             pildid.add(Base64.getEncoder().encodeToString(b.getImage().getData()));
         }
 
+        model.addAttribute("kood", toode.getKood());
         model.addAttribute("name", toode.getName());
         model.addAttribute("price", toode.getPrice());
         model.addAttribute("desc", toode.getDesc());
@@ -307,8 +308,10 @@ public class Controller {
         }
         System.out.println(tooted);
         response.addCookie(new Cookie("tooted", tooted));
-        if (!Objects.isNull(redirect)) {
+        response.sendRedirect("/ostukorv");
 
+        /* HILJEM KUI KASUTAB REDIRECTI
+        if (!Objects.isNull(redirect)) {
             if (redirect.equalsIgnoreCase("/ostukorv")) {
                 response.sendRedirect(redirect);
             } else if (Objects.isNull(p)) {
@@ -320,6 +323,7 @@ public class Controller {
             // Kui redirect on tühi siis viskab errori
             response.sendRedirect("error");
         }
+         */
     }
 
     @PostMapping("eemaldaToode")
@@ -372,19 +376,23 @@ public class Controller {
 
          // TODO: kontrollib kas tooted on ka saadaval
 
-        for (String i : tooteKoodiList) {
-            String kogus = i.split("=")[0];
-            String kood = i.split("=")[1];
-            try {
-                Toode temp = toodeRepository.findByKood(kood).get(0);
-                Pilt a = pildiTeenus.getPhoto(temp.getImage().get(0));
-                temp.setThumbnail(Base64.getEncoder().encodeToString(a.getImage().getData()));
-                temp.setName(" " + temp.getName());
-                temp.setTooteKogus(kogus);
-                temp.setKoguseHind(String.valueOf(round(Integer.parseInt(kogus) * temp.getPrice(), 2)));
-                tooted.add(temp);
-            } catch (Exception e) {
-                System.out.println("TOOTE KOODI EI OLE ANDMEBAASIS");
+        // Millegi pärast on listis alati mingi element
+        if (tooteKoodiList.size() > 0 && tooteKoodiList.get(0).length() > 0) {
+            for (String i : tooteKoodiList) {
+                //System.out.println("TootekoodiListi esimene element: " + i + " ja pikkus: " + i.length());
+                String kogus = i.split("=")[0];
+                String kood = i.split("=")[1];
+                try {
+                    Toode temp = toodeRepository.findByKood(kood).get(0);
+                    Pilt a = pildiTeenus.getPhoto(temp.getImage().get(0));
+                    temp.setThumbnail(Base64.getEncoder().encodeToString(a.getImage().getData()));
+                    temp.setName(" " + temp.getName());
+                    temp.setTooteKogus(kogus);
+                    temp.setKoguseHind(String.valueOf(round(Integer.parseInt(kogus) * temp.getPrice(), 2)));
+                    tooted.add(temp);
+                } catch (Exception e) {
+                    System.out.println("TOOTE KOODI EI OLE ANDMEBAASIS");
+                }
             }
         }
         model.addAttribute("tooted", tooted);
@@ -392,8 +400,16 @@ public class Controller {
         for (Toode i : tooted) {
             totalPrice += Double.parseDouble(i.getKoguseHind());
         }
+
         model.addAttribute("subtotal", String.valueOf(round(totalPrice, 2)));
-        model.addAttribute("total", String.valueOf(round(totalPrice+10d, 2)));
+
+        if (tooteKoodiList.size() > 0 && tooteKoodiList.get(0).length() > 0) {
+            model.addAttribute("transport", "10.0");
+            model.addAttribute("total", String.valueOf(round(totalPrice+10d, 2)));
+        } else {
+            model.addAttribute("transport", "0.0");
+            model.addAttribute("total", String.valueOf(round(totalPrice, 2)));
+        }
 
         return "main";
     }
@@ -423,15 +439,61 @@ public class Controller {
     }
 
     @GetMapping("/tellimus")
-    public String tellimus(Model model) {
+    public String tellimus(Model model, HttpServletRequest request) {
         model.addAttribute("page", "tellimus");
+        String tooteCookie = getCookieString(request.getCookies(), "tooted");
+
+        if (tooteCookie.isBlank()) {
+            // Ei ole ühtegi toodet ostukorvis
+        }
+        List<String> tooteKoodiList = List.of(tooteCookie.split("\\|"));
+        List<Toode> tooted = new ArrayList<>();
+
+        // TODO: kontrollib kas tooted on ka saadaval
+
+        // Millegi pärast on listis alati mingi element
+        if (tooteKoodiList.size() > 0 && tooteKoodiList.get(0).length() > 0) {
+            for (String i : tooteKoodiList) {
+                //System.out.println("TootekoodiListi esimene element: " + i + " ja pikkus: " + i.length());
+                String kogus = i.split("=")[0];
+                String kood = i.split("=")[1];
+                try {
+                    Toode temp = toodeRepository.findByKood(kood).get(0);
+                    temp.setName(" " + temp.getName());
+                    temp.setTooteKogus(kogus);
+                    temp.setKoguseHind(String.valueOf(round(Integer.parseInt(kogus) * temp.getPrice(), 2)));
+                    tooted.add(temp);
+                } catch (Exception e) {
+                    System.out.println("TOOTE KOODI EI OLE ANDMEBAASIS");
+                }
+            }
+        }
+        model.addAttribute("tooted", tooted);
+        double totalPrice = 0d;
+        for (Toode i : tooted) {
+            totalPrice += Double.parseDouble(i.getKoguseHind());
+        }
+
+        model.addAttribute("subtotal", String.valueOf(round(totalPrice, 2)));
+
+        if (tooteKoodiList.size() > 0 && tooteKoodiList.get(0).length() > 0) {
+            model.addAttribute("transport", "10.0");
+            model.addAttribute("total", String.valueOf(round(totalPrice+10d, 2)));
+        } else {
+            model.addAttribute("transport", "0.0");
+            model.addAttribute("total", String.valueOf(round(totalPrice, 2)));
+        }
+
+
+
+
         // TODO: Kontrollib kas tooded on laos olemas, kui ei siis redirect ostukorvi erroriga
         return "main";
     }
 
     @PostMapping("/tellimuseVormistamine")
-    public void tellimuseVormistamine(HttpServletResponse response, HttpServletRequest request) {
-
+    public void tellimuseVormistamine(HttpServletResponse response, HttpServletRequest request, @RequestParam String a, @RequestParam String b) {
+        System.out.println("Sain tellimuse: ");
     }
 
     public static String getCookieString(Cookie[] cookies, String name) {
