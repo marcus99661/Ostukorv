@@ -1,10 +1,7 @@
 package com.github.marcus99661.ostukorv;
 
 
-import com.github.marcus99661.ostukorv.Repository.AdminRepository;
-import com.github.marcus99661.ostukorv.Repository.KasutajaRepository;
-import com.github.marcus99661.ostukorv.Repository.PiltRepository;
-import com.github.marcus99661.ostukorv.Repository.ToodeRepository;
+import com.github.marcus99661.ostukorv.Repository.*;
 import org.apache.commons.codec.binary.Hex;
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;

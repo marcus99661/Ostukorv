@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.github.marcus99661.ostukorv.Repository.KasutajaRepository;
 import com.github.marcus99661.ostukorv.Repository.PiltRepository;
+import com.github.marcus99661.ostukorv.Repository.TellimuseRepository;
 import com.github.marcus99661.ostukorv.Repository.ToodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -21,10 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @org.springframework.stereotype.Controller
 public class Controller {
@@ -32,21 +30,23 @@ public class Controller {
     static Algorithm algorithm = Algorithm.HMAC256("6643110C5628FFF59EDF76B82D5BF573BF800F16A4D65DEB1E5D6F1A46296D0B");
 
     @Autowired
-    public KasutajaRepository repository;
+    private KasutajaRepository repository;
 
-    @Autowired
-    private MongoTemplate mt;
 
     @Autowired
     private ToodeRepository toodeRepository;
 
+    @Autowired
+    private TellimuseRepository tellimuseRepository;
+
     private PiltService pildiTeenus = new PiltService();
 
-    public Controller(MongoTemplate mt, KasutajaRepository repository, ToodeRepository toodeRepository, PiltRepository piltRepository) {
-        this.mt = mt;
+    public Controller(MongoTemplate mt, KasutajaRepository repository, ToodeRepository toodeRepository, PiltRepository piltRepository, TellimuseRepository tellimuseRepository) {
+        //this.mt = mt;
         this.repository = repository;
         this.toodeRepository = toodeRepository;
         pildiTeenus.photoRepo = piltRepository;
+        this.tellimuseRepository = tellimuseRepository;
     }
 
     /**
@@ -492,8 +492,24 @@ public class Controller {
     }
 
     @PostMapping("/tellimuseVormistamine")
-    public void tellimuseVormistamine(HttpServletResponse response, HttpServletRequest request, @RequestParam String a, @RequestParam String b) {
-        System.out.println("Sain tellimuse: ");
+    public String tellimuseVormistamine(Model model, HttpServletResponse response, HttpServletRequest request, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String email, @RequestParam String city, @RequestParam String phone, @RequestParam String address, @RequestParam String country, @RequestParam String county, @RequestParam String zipCode, @RequestParam String payment) {
+        System.out.println("Sain tellimuse");
+        model.addAttribute("page", "tellimusKorras");
+        HashMap<String, Integer> products = new HashMap<>();
+
+        String tooteCookie = getCookieString(request.getCookies(), "tooted");
+        List<String> tooteKoodiList = List.of(tooteCookie.split("\\|"));
+
+        for (String i : tooteKoodiList) {
+            String kogus = i.split("=")[0];
+            String kood = i.split("=")[1];
+            products.put(kood, Integer.parseInt(kogus));
+        }
+
+        Tellimus uusTellimus = new Tellimus(firstName, lastName, email, phone, city, address, zipCode, products, payment, country, county);
+        tellimuseRepository.save(uusTellimus);
+
+        return "main";
     }
 
     public static String getCookieString(Cookie[] cookies, String name) {

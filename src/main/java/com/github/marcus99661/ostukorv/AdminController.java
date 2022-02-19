@@ -73,7 +73,6 @@ public class AdminController {
     }
     @GetMapping("/")
     public void adminIndex2(@RequestParam(required = false) String error, Model model, HttpServletResponse response) throws IOException {
-        System.out.println("SIIN ME OLEME");
         response.sendRedirect("/admin");
         return;
     }
@@ -216,7 +215,7 @@ public class AdminController {
 
         Toode temp = asd.get(0);
         /**
-         * VÕIMALUS LISADA MITU PILTI
+         * TODO: VÕIMALUS LISADA MITU PILTI
          */
         temp.setAmount(amount);
         temp.setName(name);

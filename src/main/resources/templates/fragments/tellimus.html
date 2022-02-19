@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="language">
     <!-- Checkout Start -->
+    <form action="/tellimuseVormistamine" method="post">
     <div class="container-fluid pt-5">
         <div class="row px-xl-5">
             <div class="col-lg-8">
@@ -10,27 +11,27 @@
                     <div class="row">
                         <div class="col-md-6 form-group">
                             <label>Eesnimi</label>
-                            <input class="form-control" type="text" placeholder="Mari">
+                            <input class="form-control" name="firstName" type="text" placeholder="Mari">
                         </div>
                         <div class="col-md-6 form-group">
                             <label>Perekonnanimi</label>
-                            <input class="form-control" type="text" placeholder="Maasikas">
+                            <input class="form-control" name="lastName" type="text" placeholder="Maasikas">
                         </div>
                         <div class="col-md-6 form-group">
                             <label>E-mail</label>
-                            <input class="form-control" type="text" placeholder="marimaasikas@email.com">
+                            <input class="form-control" name="email" type="text" placeholder="marimaasikas@email.com">
                         </div>
                         <div class="col-md-6 form-group">
                             <label>Telefoni number</label>
-                            <input class="form-control" type="text" placeholder="+372 1234 5678">
+                            <input class="form-control" name="phone" type="text" placeholder="+372 1234 5678">
                         </div>
                         <div class="col-md-6 form-group">
                             <label>Aadress</label>
-                            <input class="form-control" type="text" placeholder="Vanemuise 35">
+                            <input class="form-control" name="address" type="text" placeholder="Vanemuise 35">
                         </div>
                         <div class="col-md-6 form-group">
                             <label>Riik</label>
-                            <select class="custom-select">
+                            <select name="country" class="custom-select">
                                 <option selected>Eesti</option>
                                 <option>Soome</option>
                                 <option>Läti</option>
@@ -39,78 +40,19 @@
                         </div>
                         <div class="col-md-6 form-group">
                             <label>Linn</label>
-                            <input class="form-control" type="text" placeholder="Tartu">
+                            <input class="form-control" name="city" type="text" placeholder="Tartu">
                         </div>
                         <div class="col-md-6 form-group">
                             <label>Maakond</label>
-                            <input class="form-control" type="text" placeholder="Tartumaa">
+                            <input class="form-control" name="county" type="text" placeholder="Tartumaa">
                         </div>
                         <div class="col-md-6 form-group">
                             <label>Postiindeks</label>
-                            <input class="form-control" type="text" placeholder="123">
-                        </div>
-                        <!--
-                        <div class="col-md-12 form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="shipto">
-                                <label class="custom-control-label" for="shipto"  data-toggle="collapse" data-target="#shipping-address">Ship to different address</label>
-                            </div>
-                        </div>
-                        -->
-                    </div>
-                </div>
-                <div class="collapse mb-4" id="shipping-address">
-                    <h4 class="font-weight-semi-bold mb-4">Shipping Address</h4>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label>First Name</label>
-                            <input class="form-control" type="text" placeholder="John">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Last Name</label>
-                            <input class="form-control" type="text" placeholder="Doe">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>E-mail</label>
-                            <input class="form-control" type="text" placeholder="example@email.com">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Mobile No</label>
-                            <input class="form-control" type="text" placeholder="+123 456 789">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Address Line 1</label>
-                            <input class="form-control" type="text" placeholder="123 Street">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Address Line 2</label>
-                            <input class="form-control" type="text" placeholder="123 Street">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Country</label>
-                            <select class="custom-select">
-                                <option selected>Eesti</option>
-                                <option>Soome</option>
-                                <option>Läti</option>
-                                <option>Leedu</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>City</label>
-                            <input class="form-control" type="text" placeholder="New York">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>State</label>
-                            <input class="form-control" type="text" placeholder="New York">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>ZIP Code</label>
-                            <input class="form-control" type="text" placeholder="123">
+                            <input class="form-control" name="zipCode" type="text" placeholder="123">
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Tooted -->
             <div class="col-lg-4">
                 <div class="card border-secondary mb-5">
                     <div class="card-header bg-secondary border-0">
@@ -150,25 +92,25 @@
                     <div class="card-body">
                         <div class="form-group">
                             <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" name="payment" id="seb">
+                                <input type="radio" class="custom-control-input" name="payment" id="seb" value="SEB">
                                 <label class="custom-control-label" for="seb">SEB</label>
                             </div>
                         </div>
                         <div class="">
                             <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" name="payment" id="swedbank">
+                                <input type="radio" class="custom-control-input" name="payment" id="swedbank" value="Swedbank">
                                 <label class="custom-control-label" for="swedbank">Swedbank</label>
                             </div>
                         </div>
                         <div class="">
                             <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" name="payment" id="lhv">
+                                <input type="radio" class="custom-control-input" name="payment" id="lhv" value="LHV">
                                 <label class="custom-control-label" for="lhv">LHV</label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" name="payment" id="paypal">
+                                <input type="radio" class="custom-control-input" name="payment" id="paypal" value="Paypal">
                                 <label class="custom-control-label" for="paypal">Paypal</label>
                             </div>
                         </div>
@@ -180,6 +122,7 @@
             </div>
         </div>
     </div>
+    </form>
     <!-- Checkout End -->
 </div>
 </html>
