@@ -1,5 +1,6 @@
 package com.github.marcus99661.ostukorv;
 
+import com.github.marcus99661.ostukorv.Data.Pilt;
 import com.github.marcus99661.ostukorv.Repository.PiltRepository;
 import org.apache.commons.codec.binary.Hex;
 import org.bson.BsonBinarySubType;

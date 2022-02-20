@@ -1,8 +1,7 @@
 package com.github.marcus99661.ostukorv.Repository;
 
-import com.github.marcus99661.ostukorv.Toode;
+import com.github.marcus99661.ostukorv.Data.Toode;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
 

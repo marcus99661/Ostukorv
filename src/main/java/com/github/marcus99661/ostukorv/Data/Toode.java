@@ -1,4 +1,4 @@
-package com.github.marcus99661.ostukorv;
+package com.github.marcus99661.ostukorv.Data;
 
 import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;

@@ -17,3 +17,16 @@ table, th, td {
     font-size: 30px;
 
 }
+
+.kategooriad {
+    float: left;
+    margin-left: 20px;
+    color: white;
+    background: green;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 20px;
+
+}

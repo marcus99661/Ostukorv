@@ -1,4 +1,4 @@
-package com.github.marcus99661.ostukorv;
+package com.github.marcus99661.ostukorv.Data;
 
 import java.util.ArrayList;
 import java.util.HashMap;

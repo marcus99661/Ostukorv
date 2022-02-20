@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Toodete nimekiri</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}" />
+</head>
+<body>
+    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse" style="margin-left: 20px; margin-top: 20px;">
+        <div class="navbar-nav mr-auto py-0">
+            <button type="button" class="lisa-toode" th:attr="onclick='window.location.href=\'/admin/\''" style="background: lightgreen"> Tooted </button>
+            <button type="button" class="lisa-toode" th:attr="onclick='window.location.href=\'/admin/tellimused\''" style="background: lightgreen"> Tellimused </button>
+        </div>
+    </div>
+    <div class="toote-nimekiri">
+        <table width="80%">
+            <thead>
+            <tr>
+                <th width="20%"> Aeg </th>
+                <th width="50%"> Nimi </th>
+                <th width="20%"> Hind </th>
+                <th width="5%"> Vaata </th>
+                <th width="5%"> Valmis </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="tellimus : ${tellimused_open}">
+                    <div class="toode">
+                        <td><span style="width: 20%;" th:text="${tellimus.tempDate}"> Aeg </span></td>
+                        <td><span th:text="${tellimus.firstName} + ' ' + ${tellimus.lastName}"> Nimi </span></td>
+                        <td><span th:text="${tellimus.price}"> Hind </span></td>
+                        <td><button type="button" th:attr="onclick='window.location.href=\'/admin/tellimus?kood=' + ${tellimus.kood} + '\''"> Vaata </button></td>
+                        <td><button type="button" th:attr="onclick='window.location.href=\'/admin/tellimusDone?kood=' + ${tellimus.kood} + '\''"> Valmis </button></td>
+                    </div>
+            </tr>
+            <tr th:each="tellimus : ${tellimused_done}" style="background: grey">
+                    <div class="toode">
+                        <td><span style="width: 20%;" th:text="${tellimus.tempDate}"> Aeg </span></td>
+                        <td><span th:text="${tellimus.firstName} + ' ' + ${tellimus.lastName}"> Nimi </span></td>
+                        <td><span th:text="${tellimus.price}"> Hind </span></td>
+                        <td><button type="button" th:attr="onclick='window.location.href=\'/admin/tellimus?kood=' + ${tellimus.kood} + '\''"> Vaata </button></td>
+                        <td><button type="button" th:attr="onclick='window.location.href=\'/admin/tellimusDone?kood=' + ${tellimus.kood} + '\''"> Valmis </button></td>
+                    </div>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

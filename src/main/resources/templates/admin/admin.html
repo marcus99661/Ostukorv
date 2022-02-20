@@ -6,7 +6,12 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}" />
 </head>
 <body>
-<!DOCTYPE html>
+    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse" style="margin-left: 20px; margin-top: 20px;">
+        <div class="navbar-nav mr-auto py-0">
+            <button type="button" class="kategooriad" th:attr="onclick='window.location.href=\'/admin/\''" style="background: lightgreen"> Tooted </button>
+            <button type="button" class="kategooriad" th:attr="onclick='window.location.href=\'/admin/tellimused\''" style="background: lightgreen"> Tellimused </button>
+        </div>
+    </div>
     <div class="toote-nimekiri">
         <button type="button" class="lisa-toode" th:attr="onclick='window.location.href=\'/admin/toode?kood=new\''"> Lisa Toode </button>
         <table width="80%">

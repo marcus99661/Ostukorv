@@ -5,8 +5,13 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.github.marcus99661.ostukorv.Data.Admin;
+import com.github.marcus99661.ostukorv.Data.Pilt;
+import com.github.marcus99661.ostukorv.Data.Tellimus;
+import com.github.marcus99661.ostukorv.Data.Toode;
 import com.github.marcus99661.ostukorv.Repository.AdminRepository;
 import com.github.marcus99661.ostukorv.Repository.PiltRepository;
+import com.github.marcus99661.ostukorv.Repository.TellimuseRepository;
 import com.github.marcus99661.ostukorv.Repository.ToodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -23,6 +28,8 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.util.*;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
 @org.springframework.stereotype.Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -38,17 +45,21 @@ public class AdminController {
     @Autowired
     private ToodeRepository toodeRepository;
 
+    @Autowired
+    private TellimuseRepository tellimuseRepository;
+
     private PiltService pildiTeenus = new PiltService();
 
     //@Autowired
     //private PiltRepository piltRepository;
 
-    public AdminController(MongoTemplate mt, AdminRepository repository, ToodeRepository toodeRepository, PiltRepository piltRepository) {
+    public AdminController(MongoTemplate mt, AdminRepository repository, ToodeRepository toodeRepository, PiltRepository piltRepository, TellimuseRepository tellimuseRepository) {
         this.mt = mt;
         this.adminRepository = repository;
         this.toodeRepository = toodeRepository;
         //this.piltRepository = piltRepository;
         pildiTeenus.photoRepo = piltRepository;
+        this.tellimuseRepository = tellimuseRepository;
     }
 
     @GetMapping("")
@@ -247,8 +258,38 @@ public class AdminController {
 
 
     @GetMapping("/tellimused")
-    public void tellimused() {
+    public String tellimused(Model model) {
 
+        List<Tellimus> tellimused_done = tellimuseRepository.findByDone(false);
+        List<Tellimus> tellimused_open = tellimuseRepository.findByDone(true);
+
+        System.out.println("Done: " + tellimused_done.size());
+        System.out.println("Open: " + tellimused_open.size());
+
+        PrettyTime p = new PrettyTime(new Locale("et"));
+
+
+        for (int i = 0; i < tellimused_open.size(); i++) {
+            tellimused_open.get(i).tempDate = p.format(tellimused_open.get(i).orderTime);
+        }
+
+        for (int i = 0; i < tellimused_done.size(); i++) {
+            tellimused_done.get(i).tempDate = p.format(tellimused_done.get(i).orderTime);
+        }
+
+        //System.out.println("Example: " + tellimused_open.get(0));
+
+        model.addAttribute("tellimused_open", tellimused_open);
+        model.addAttribute("tellimused_done", tellimused_done);
+        return "admin/tellimused";
+    }
+
+    @GetMapping("/tellimusDone")
+    public void tellimusDone(@RequestParam String kood, HttpServletResponse response, HttpServletRequest request) throws IOException {
+        Tellimus tellimus = tellimuseRepository.findByKood(kood);
+        tellimus.done = true;
+        tellimuseRepository.save(tellimus);
+        response.sendRedirect("/admin/tellimused");
     }
 
     @GetMapping("/kasutajatugi")

@@ -5,14 +5,16 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.github.marcus99661.ostukorv.Data.Kasutaja;
+import com.github.marcus99661.ostukorv.Data.Pilt;
+import com.github.marcus99661.ostukorv.Data.Tellimus;
+import com.github.marcus99661.ostukorv.Data.Toode;
 import com.github.marcus99661.ostukorv.Repository.KasutajaRepository;
 import com.github.marcus99661.ostukorv.Repository.PiltRepository;
 import com.github.marcus99661.ostukorv.Repository.TellimuseRepository;
 import com.github.marcus99661.ostukorv.Repository.ToodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -496,6 +498,7 @@ public class Controller {
         System.out.println("Sain tellimuse");
         model.addAttribute("page", "tellimusKorras");
         HashMap<String, Integer> products = new HashMap<>();
+        List<Toode> tooted = new ArrayList<>();
 
         String tooteCookie = getCookieString(request.getCookies(), "tooted");
         List<String> tooteKoodiList = List.of(tooteCookie.split("\\|"));
@@ -506,7 +509,21 @@ public class Controller {
             products.put(kood, Integer.parseInt(kogus));
         }
 
-        Tellimus uusTellimus = new Tellimus(firstName, lastName, email, phone, city, address, zipCode, products, payment, country, county);
+        double totalPrice = 0d;
+        for (String i : tooteKoodiList) {
+            String kogus = i.split("=")[0];
+            String kood = i.split("=")[1];
+            try {
+                Toode temp = toodeRepository.findByKood(kood).get(0);
+                temp.setTooteKogus(kogus);
+                temp.setKoguseHind(String.valueOf(round(Integer.parseInt(kogus) * temp.getPrice(), 2)));
+                totalPrice += Double.parseDouble(temp.getKoguseHind());
+            } catch (Exception e) {
+                System.out.println("TOOTE KOODI EI OLE ANDMEBAASIS: " + kood);
+            }
+        }
+
+        Tellimus uusTellimus = new Tellimus(firstName, lastName, email, phone, city, address, zipCode, products, payment, country, county, totalPrice);
         tellimuseRepository.save(uusTellimus);
 
         return "main";
